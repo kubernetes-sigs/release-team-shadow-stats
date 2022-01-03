@@ -3,6 +3,7 @@
 #
 
 import matplotlib.pyplot as plt
+from collections import Counter
 from vars import *
 
 # generic method to display percentage and amount on charts
@@ -110,4 +111,87 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
     ax2.pie(team_returners_and_newcomers, labels=[group_returners.capitalize(), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
     ax2.axis('equal')
+    plt.show()
+
+# # filter affiliations / companies of the applicants
+# def applicant_affiliation(affiliations, additional_keywords=[], additional_aliases={}, threshold=1, unreached_threshold_print=False):
+#     search_affiliation_keywords = ["student", "liquid reply", "vmware", "microsoft", "red hat", "institute", "cisco", "ibm", "apple", "suse", "google", "independant", "deloitte", "adesso"]
+#     search_affiliation_keywords = search_affiliation_keywords + additional_keywords
+#     aliases = {"redhat": "red hat", "freelancer": "independant"}
+#     aliases.update(additional_aliases)
+    
+#     # clean up affiliations
+#     clean_affiliations = []
+#     for a in affiliations.tolist():
+#         if a is not None and type(a) is str:
+#             a = a.lower()
+#             keyword_or_alias_found = False
+#             for keyword in search_affiliation_keywords:
+#                 if keyword in a:
+#                     clean_affiliations.append(keyword)
+#                     keyword_or_alias_found = True
+#                     break
+#             if not keyword_or_alias_found:
+#                 for alias, alias_repl in aliases.items():
+#                     if alias in a:
+#                         clean_affiliations.append(alias_repl)
+#                         keyword_or_alias_found = True
+#                         break
+#             if not keyword_or_alias_found:
+#                 clean_affiliations.append(a)
+#     # count up affiliations
+#     affiliation_dict = Counter(clean_affiliations)
+#     affiliation_dict_threshold = dict()
+#     if unreached_threshold_print:
+#         print("Affiliations which do not reach threshold")
+#     for affiliation, count in affiliation_dict.items():
+#         if count > threshold:
+#             affiliation_dict_threshold[affiliation] = count
+#         elif unreached_threshold_print:
+#             print(affiliation)
+    
+#     # create chart
+#     print(f"\nAffiliation of applicants with a threshold of {threshold}")
+#     fig6, ax6 = plt.subplots()
+#     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(), autopct=make_autopct(affiliation_dict_threshold.values()))
+#     ax6.axis('equal')
+#     plt.show()
+
+# generic filter of entities
+def filter_entities(entities_list, entities_description="Entities", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False):
+    # clean entities
+    clean_entities = []
+    for a in entities_list:
+        if a is not None and type(a) is str:
+            a = a.lower()
+            keyword_or_alias_found = False
+            for keyword in keywords:
+                if keyword in a:
+                    clean_entities.append(keyword)
+                    keyword_or_alias_found = True
+                    break
+            if not keyword_or_alias_found:
+                for alias, alias_repl in aliases.items():
+                    if alias in a:
+                        clean_entities.append(alias_repl)
+                        keyword_or_alias_found = True
+                        break
+            if not keyword_or_alias_found:
+                clean_entities.append(a)
+    # count up entities
+    affiliation_dict = Counter(clean_entities)
+    affiliation_dict_threshold = dict()
+    if unreached_threshold_print:
+        print("Entities which do not reach threshold")
+    for affiliation, count in affiliation_dict.items():
+        if count > threshold:
+            affiliation_dict_threshold[affiliation] = count
+        elif unreached_threshold_print:
+            print(affiliation)
+    
+    # create chart
+    print(f"\n{entities_description} of applicants with a threshold of {threshold}")
+    fig6, ax6 = plt.subplots()
+    ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(), autopct=make_autopct(affiliation_dict_threshold.values()))
+    ax6.axis('equal')
     plt.show()
