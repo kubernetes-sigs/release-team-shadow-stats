@@ -1,4 +1,5 @@
 *.xlsx
+*.png
 .vscode
 
 # Byte-compiled / optimized / DLL files

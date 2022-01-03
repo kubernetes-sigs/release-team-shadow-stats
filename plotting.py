@@ -26,10 +26,11 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
     ax1.axis('equal')
     print("SIG-Release applicants by team")
     print(f"Total applicants: {total_applicants}, which applied to one or multiple teams")
+    plt.savefig(get_plot_file("applicants-by-team"))
     plt.show()
 
 # Rejected newcomers which apply again
-def reapplying_newcomers(newcomers_applied_previously):
+def reapplying_newcomers(newcomers_applied_previously, team=""):
     print("Rejected newcomers which apply again")
     apply_again = {"Reapplying newcomers": 0, "First time applicants": 0, "Unclear": 0}
     for s in newcomers_applied_previously:
@@ -43,6 +44,7 @@ def reapplying_newcomers(newcomers_applied_previously):
     fig4, ax5 = plt.subplots()
     ax5.pie(apply_again.values(), labels=apply_again.keys(), autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
+    plt.savefig(get_plot_file(f"reapplying-newcomers{team}"))
     plt.show()
 
 # chart to highlight applicant pronouns
@@ -78,6 +80,7 @@ def pronouns_chart(data, team=""):
             del resize_applicant_pronouns[k]
     ax4.pie(resize_applicant_pronouns.values(), labels=resize_applicant_pronouns.keys(), autopct=make_autopct(resize_applicant_pronouns.values()))
     ax4.axis('equal')
+    plt.savefig(get_plot_file(f"pronouns{team}"))
     plt.show()
 
 # filter applicants which also applied to another team
@@ -100,6 +103,7 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
         print(f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][group_returners]) + len(release_teams[team][group_newcomers])} also applied to one or more of the other teams")
     ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(), autopct=make_autopct(applied_to_team_as_well.values()))
     ax3.axis('equal')
+    plt.savefig(get_plot_file(f"applyied-to-other-teams-{team}"))
     plt.show()
 
 # filter newcomers and returners by team
@@ -111,54 +115,11 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
     ax2.pie(team_returners_and_newcomers, labels=[group_returners.capitalize(), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
     ax2.axis('equal')
+    plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
     plt.show()
 
-# # filter affiliations / companies of the applicants
-# def applicant_affiliation(affiliations, additional_keywords=[], additional_aliases={}, threshold=1, unreached_threshold_print=False):
-#     search_affiliation_keywords = ["student", "liquid reply", "vmware", "microsoft", "red hat", "institute", "cisco", "ibm", "apple", "suse", "google", "independant", "deloitte", "adesso"]
-#     search_affiliation_keywords = search_affiliation_keywords + additional_keywords
-#     aliases = {"redhat": "red hat", "freelancer": "independant"}
-#     aliases.update(additional_aliases)
-    
-#     # clean up affiliations
-#     clean_affiliations = []
-#     for a in affiliations.tolist():
-#         if a is not None and type(a) is str:
-#             a = a.lower()
-#             keyword_or_alias_found = False
-#             for keyword in search_affiliation_keywords:
-#                 if keyword in a:
-#                     clean_affiliations.append(keyword)
-#                     keyword_or_alias_found = True
-#                     break
-#             if not keyword_or_alias_found:
-#                 for alias, alias_repl in aliases.items():
-#                     if alias in a:
-#                         clean_affiliations.append(alias_repl)
-#                         keyword_or_alias_found = True
-#                         break
-#             if not keyword_or_alias_found:
-#                 clean_affiliations.append(a)
-#     # count up affiliations
-#     affiliation_dict = Counter(clean_affiliations)
-#     affiliation_dict_threshold = dict()
-#     if unreached_threshold_print:
-#         print("Affiliations which do not reach threshold")
-#     for affiliation, count in affiliation_dict.items():
-#         if count > threshold:
-#             affiliation_dict_threshold[affiliation] = count
-#         elif unreached_threshold_print:
-#             print(affiliation)
-    
-#     # create chart
-#     print(f"\nAffiliation of applicants with a threshold of {threshold}")
-#     fig6, ax6 = plt.subplots()
-#     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(), autopct=make_autopct(affiliation_dict_threshold.values()))
-#     ax6.axis('equal')
-#     plt.show()
-
 # generic filter of entities
-def filter_entities(entities_list, entities_description="Entities", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False):
+def filter_entities(entities_list, entities_description="Entities", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False, team=""):
     # clean entities
     clean_entities = []
     for a in entities_list:
@@ -194,4 +155,5 @@ def filter_entities(entities_list, entities_description="Entities", keywords=[],
     fig6, ax6 = plt.subplots()
     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')
+    plt.savefig(get_plot_file(f"entites{entities_description}{team}"))
     plt.show()

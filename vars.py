@@ -1,3 +1,7 @@
+plot_folder = "plots"
+def get_plot_file(filename):
+    return f"./{plot_folder}/{filename}.png"
+
 # Groups of applicants
 group_returners = "returners"
 group_newcomers = "newcomers"
