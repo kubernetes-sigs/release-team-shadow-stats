@@ -1,5 +1,6 @@
 *.xlsx
 plots/*.png
+applicants/*.md
 .vscode
 
 # Byte-compiled / optimized / DLL files
