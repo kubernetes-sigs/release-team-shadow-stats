@@ -72,7 +72,8 @@ def pronouns_chart(data, team=""):
         elif "neopronouns" in clean_e:
             applicant_pronouns["neopronouns"] += 1
         else:
-            applicant_pronouns["invalid pronoun"] += 1
+            print(clean_e)
+            applicant_pronouns["other"] += 1
     # delete all pronous that do not occur
     resize_applicant_pronouns = applicant_pronouns.copy()
     for k in applicant_pronouns:

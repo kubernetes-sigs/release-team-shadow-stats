@@ -1,5 +1,7 @@
 # Application Summary
 
+> PROJECT IDEA AND OUTCOME UNDER DISCUSSION - STRUCTURE, HOW TO USE ... IS LIKELY TO CHANGE
+
 Used to generate a summary for the Kubernetes sig-release shadow applicants.
 
 The project is structured in two parts:
