@@ -7,11 +7,13 @@ from collections import Counter
 from vars import *
 
 # generic method to display percentage and amount on charts
+
+
 def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
         val = int(round(pct*total/100.0))
-        return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
+        return '{p:.2f}%  ({v:d})'.format(p=pct, v=val)
     return my_autopct
 
 #
@@ -19,40 +21,52 @@ def make_autopct(values):
 #
 
 # Applicants by team
+
+
 def applicants_by_team(total_applicants, release_teams_dict_df):
-    release_team_applicants = [len(v[group_newcomers]) + len(v[group_returners]) for _, v in release_teams_dict_df.items()]
+    release_team_applicants = [len(v[group_newcomers]) + len(v[group_returners])
+                               for _, v in release_teams_dict_df.items()]
     fig1, ax1 = plt.subplots()
-    ax1.pie(release_team_applicants, labels=release_teams_dict_df.keys(), autopct=make_autopct(release_team_applicants))
+    ax1.pie(release_team_applicants, labels=release_teams_dict_df.keys(),
+            autopct=make_autopct(release_team_applicants))
     ax1.axis('equal')
     print("SIG-Release applicants by team")
-    print(f"Total applicants: {total_applicants}, which applied to one or multiple teams")
+    print(
+        f"Total applicants: {total_applicants}, which applied to one or multiple teams")
     plt.savefig(get_plot_file("applicants-by-team"))
     plt.show()
 
 # Rejected newcomers which apply again
+
+
 def reapplying_newcomers(newcomers_applied_previously, team=""):
     print("Rejected newcomers which apply again")
-    apply_again = {"Reapplying newcomers": 0, "First time applicants": 0, "Unclear": 0}
+    apply_again = {"Reapplying newcomers": 0,
+                   "First time applicants": 0, "Unclear": 0}
     for s in newcomers_applied_previously:
         s = str(s).lower()
         if "yes" in s or "yeah" in s:
             apply_again["Reapplying newcomers"] += 1
-        elif "no" in s or "n/a" in s :
+        elif "no" in s or "n/a" in s:
             apply_again["First time applicants"] += 1
         else:
             apply_again["Unclear"] += 1
     fig4, ax5 = plt.subplots()
-    ax5.pie(apply_again.values(), labels=apply_again.keys(), autopct=make_autopct(apply_again.values()))
+    ax5.pie(apply_again.values(), labels=apply_again.keys(),
+            autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
     plt.savefig(get_plot_file(f"reapplying-newcomers{team}"))
     plt.show()
 
 # chart to highlight applicant pronouns
 # @data: string[]
+
+
 def pronouns_chart(data, team=""):
     print(f"Pronouns {team}")
     fig4, ax4 = plt.subplots()
-    applicant_pronouns = {"he/they":0, "he/him":0, "she/her": 0, "she/they": 0, "they/them":0, "ze": 0, "neopronouns": 0, "invalid pronoun": 0}
+    applicant_pronouns = {"he/they": 0, "he/him": 0, "she/her": 0, "she/they": 0,
+                          "they/them": 0, "ze": 0, "neopronouns": 0, "other": 0}
     for e in data:
         clean_e = str(e).replace("https://www.mypronouns.org/", "", 1).lower()
         if "she" in clean_e or "her" in clean_e:
@@ -79,13 +93,16 @@ def pronouns_chart(data, team=""):
     for k in applicant_pronouns:
         if applicant_pronouns[k] == 0:
             del resize_applicant_pronouns[k]
-    ax4.pie(resize_applicant_pronouns.values(), labels=resize_applicant_pronouns.keys(), autopct=make_autopct(resize_applicant_pronouns.values()))
+    ax4.pie(resize_applicant_pronouns.values(), labels=resize_applicant_pronouns.keys(
+    ), autopct=make_autopct(resize_applicant_pronouns.values()))
     ax4.axis('equal')
     plt.savefig(get_plot_file(f"pronouns{team}"))
     plt.show()
 
 # filter applicants which also applied to another team
 # @applicants_interested_in_roles series[]
+
+
 def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_teams={}):
     print(f"{team} applicants applied to other teams")
     number_of_applicants_which_also_applied_to_another_team = 0
@@ -95,31 +112,39 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
         for e in l:
             interested_in_teams = e.split(", ")
             if len(interested_in_teams) > 1:
-                number_of_applicants_which_also_applied_to_another_team+=1
+                number_of_applicants_which_also_applied_to_another_team += 1
             for e in interested_in_teams:
-                applied_to_team_as_well[e.strip()] = applied_to_team_as_well.get(e.strip(), 0) + 1   
+                applied_to_team_as_well[e.strip()] = applied_to_team_as_well.get(
+                    e.strip(), 0) + 1
 
     if team != "":
         del applied_to_team_as_well[team]
-        print(f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][group_returners]) + len(release_teams[team][group_newcomers])} also applied to one or more of the other teams")
-    ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(), autopct=make_autopct(applied_to_team_as_well.values()))
+        print(
+            f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][group_returners]) + len(release_teams[team][group_newcomers])} also applied to one or more of the other teams")
+    ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
+    ), autopct=make_autopct(applied_to_team_as_well.values()))
     ax3.axis('equal')
     plt.savefig(get_plot_file(f"applyied-to-other-teams-{team}"))
     plt.show()
 
 # filter newcomers and returners by team
+
+
 def newcomers_and_returners(returners_df, newcomers_df, team=""):
     if team != "":
         team = f" for {team}"
     print(f"Newcomer & Returner applicants{team}")
     fig2, ax2 = plt.subplots()
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
-    ax2.pie(team_returners_and_newcomers, labels=[group_returners.capitalize(), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
+    ax2.pie(team_returners_and_newcomers, labels=[group_returners.capitalize(
+    ), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
     ax2.axis('equal')
     plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
     plt.show()
 
 # generic filter of entities
+
+
 def filter_entities(entities_list, entities_description="Entities", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False, team=""):
     # clean entities
     clean_entities = []
@@ -150,11 +175,12 @@ def filter_entities(entities_list, entities_description="Entities", keywords=[],
             affiliation_dict_threshold[affiliation] = count
         elif unreached_threshold_print:
             print(affiliation)
-    
+
     # create chart
     print(f"\n{entities_description} of applicants with a threshold of {threshold}")
     fig6, ax6 = plt.subplots()
-    ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(), autopct=make_autopct(affiliation_dict_threshold.values()))
+    ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(
+    ), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')
     plt.savefig(get_plot_file(f"entites{entities_description}{team}"))
     plt.show()
