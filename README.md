@@ -1,6 +1,6 @@
 # Release Team Shadow Applicant analysis
 
-This project is being developed in the scope of Kubernetes [sig-release](https://github.com/kubernetes/sig-release/blob/master/release-team/README.md). Its primarily developed to get a discussion started which strives to improving the release team shadow program. This project also might be subject of a donation towards one of the Kubernetes repos/ orgs.
+This project is being developed in the scope of Kubernetes [sig-release](https://github.com/kubernetes/sig-release/blob/master/release-team/README.md). The project intent is to initiate a discussion aimed at improving the Release Team Shadow program. This project could also be the subject of a donation to one of the Kubernetes repos/orgs.
 
 **!! This project is subject to change and under discussion !!**
 
@@ -20,16 +20,18 @@ Currently, there is nothing really in place.
 
 ## Examples
 **Plots**:
-Plots are created for two different types of applicant pools. Pool 1: all applicants, Pool 2: applicants by sub-team. This means that the listed plots are created once for all applicants and then for each subteam.
+Plots are created for two different types of applicant pools. 
+* Pool 1: all applicants
+* Pool 2: applicants by sub-team (a pool for enhancements ). This means that the listed plots are created once for all applicants and then for each sub-team.
 
-* Applicants by release-team sub-team (enhacements, docs, release-notes, comms, ci-signal, bug-triage)
+* Applicants by release-team sub-team (enhacements, docs, release-notes, comm's, ci-signal, bug-triage)
 * Timezones
 * Affiliation / company
 * Pronouns
 * Reapplying newcomers
 * Newcomers / returners ratio
 
-![chart example](./assets/application-summary-example-anonymized.png)
+The pie charts are generated using the python library [matplotlib](https://matplotlib.org/stable/index.html).
 
 **Applicant summary**:
 

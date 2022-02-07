@@ -19,6 +19,9 @@ def get_applicants_file(team_name, group):
 
 plot_folder = "plots"
 
+theme_matplotlib = 'ggplot'
+
 
 def get_plot_file(filename):
     return f"./{plot_folder}/{filename}.png"
+ 

@@ -34,6 +34,7 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
     print(
         f"Total applicants: {total_applicants}, which applied to one or multiple teams")
     plt.savefig(get_plot_file("applicants-by-team"))
+    plt.style.use(theme_matplotlib)
     plt.show()
 
 # Rejected newcomers which apply again
@@ -56,6 +57,7 @@ def reapplying_newcomers(newcomers_applied_previously, team=""):
             autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
     plt.savefig(get_plot_file(f"reapplying-newcomers{team}"))
+    plt.style.use(theme_matplotlib)
     plt.show()
 
 # chart to highlight applicant pronouns
@@ -97,6 +99,7 @@ def pronouns_chart(data, team=""):
     ), autopct=make_autopct(resize_applicant_pronouns.values()))
     ax4.axis('equal')
     plt.savefig(get_plot_file(f"pronouns{team}"))
+    plt.style.use(theme_matplotlib)
     plt.show()
 
 # filter applicants which also applied to another team
@@ -125,6 +128,7 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
     ), autopct=make_autopct(applied_to_team_as_well.values()))
     ax3.axis('equal')
     plt.savefig(get_plot_file(f"applyied-to-other-teams-{team}"))
+    plt.style.use(theme_matplotlib)
     plt.show()
 
 # filter newcomers and returners by team
@@ -140,6 +144,7 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     ), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
     ax2.axis('equal')
     plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
+    plt.style.use(theme_matplotlib)
     plt.show()
 
 # generic filter of entities
@@ -183,4 +188,5 @@ def filter_entities(entities_list, entities_description="Entities", keywords=[],
     ), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')
     plt.savefig(get_plot_file(f"entites{entities_description}{team}"))
+    plt.style.use(theme_matplotlib)
     plt.show()
