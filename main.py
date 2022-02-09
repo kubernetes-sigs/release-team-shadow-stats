@@ -25,7 +25,7 @@ def load_data(local_excel_f) -> ApplicantData:
     newcomers = df[df[schema_previously_served].str.contains("No")]
 
     release_teams = {
-        team_bugtriage: {}, team_cisignal: {}, team_communications: {}, team_releasenotes: {}, team_documentation: {}, team_enhacements: {}
+        team_bugtriage: {}, team_cisignal: {}, team_communications: {}, team_releasenotes: {}, team_documentation: {}, team_enhancements: {}
     }
 
     for team in release_teams:

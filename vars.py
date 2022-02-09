@@ -8,7 +8,7 @@ team_cisignal = "CI Signal"
 team_communications = "Communications"
 team_releasenotes = "Release Notes"
 team_documentation = "Documentation"
-team_enhacements = "Enhancements"
+team_enhancements = "Enhancements"
 
 applicants_folder = "applicants"
 
