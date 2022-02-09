@@ -35,7 +35,7 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
         f"Total applicants: {total_applicants}, which applied to one or multiple teams")
     plt.savefig(get_plot_file("applicants-by-team"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
 
 # Rejected newcomers which apply again
 
@@ -58,7 +58,7 @@ def reapplying_newcomers(newcomers_applied_previously, team=""):
     ax5.axis('equal')
     plt.savefig(get_plot_file(f"reapplying-newcomers{team}"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
 
 # chart to highlight applicant pronouns
 # @data: string[]
@@ -100,7 +100,7 @@ def pronouns_chart(data, team=""):
     ax4.axis('equal')
     plt.savefig(get_plot_file(f"pronouns{team}"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
 
 # filter applicants which also applied to another team
 # @applicants_interested_in_roles series[]
@@ -129,7 +129,7 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
     ax3.axis('equal')
     plt.savefig(get_plot_file(f"applyied-to-other-teams-{team}"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
 
 # filter newcomers and returners by team
 
@@ -140,12 +140,15 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     print(f"Newcomer & Returner applicants{team}")
     fig2, ax2 = plt.subplots()
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
-    ax2.pie(team_returners_and_newcomers, labels=[group_returners.capitalize(
-    ), group_newcomers.capitalize()], autopct=make_autopct(team_returners_and_newcomers))
+    print(team_returners_and_newcomers)
+    ax2.pie(team_returners_and_newcomers, 
+        labels=[group_returners.capitalize(), group_newcomers.capitalize()], 
+        autopct=make_autopct(team_returners_and_newcomers)
+        )
     ax2.axis('equal')
     plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
 
 # generic filter of entities
 
@@ -189,4 +192,4 @@ def filter_entities(entities_list, entities_description="Entities", keywords=[],
     ax6.axis('equal')
     plt.savefig(get_plot_file(f"entites{entities_description}{team}"))
     plt.style.use(theme_matplotlib)
-    plt.show()
+    # plt.show()
