@@ -5,7 +5,7 @@
 import matplotlib.pyplot as plt
 from collections import Counter
 from vars import *
-
+import math
 # generic method to display percentage and amount on charts
 
 
@@ -119,17 +119,16 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
             for e in interested_in_teams:
                 applied_to_team_as_well[e.strip()] = applied_to_team_as_well.get(
                     e.strip(), 0) + 1
-
-    if team != "":
+    if team != "" and team in applied_to_team_as_well.keys():
         del applied_to_team_as_well[team]
         print(
             f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][group_returners]) + len(release_teams[team][group_newcomers])} also applied to one or more of the other teams")
-    ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
-    ), autopct=make_autopct(applied_to_team_as_well.values()))
-    ax3.axis('equal')
-    plt.savefig(get_plot_file(f"applyied-to-other-teams-{team}"))
-    plt.style.use(theme_matplotlib)
-    # plt.show()
+        ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
+        ), autopct=make_autopct(applied_to_team_as_well.values()))
+        ax3.axis('equal')
+        plt.savefig(get_plot_file(f"applied-to-other-teams-{team}"))
+        plt.style.use(theme_matplotlib)
+        # plt.show()
 
 # filter newcomers and returners by team
 
@@ -140,15 +139,15 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     print(f"Newcomer & Returner applicants{team}")
     fig2, ax2 = plt.subplots()
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
-    print(team_returners_and_newcomers)
-    ax2.pie(team_returners_and_newcomers, 
-        labels=[group_returners.capitalize(), group_newcomers.capitalize()], 
-        autopct=make_autopct(team_returners_and_newcomers)
-        )
-    ax2.axis('equal')
-    plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
-    plt.style.use(theme_matplotlib)
-    # plt.show()
+    if not team_returners_and_newcomers == [0,0]:
+        ax2.pie(team_returners_and_newcomers, 
+            labels=[group_returners.capitalize(), group_newcomers.capitalize()], 
+            autopct=make_autopct(team_returners_and_newcomers)
+            )
+        ax2.axis('equal')
+        plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
+        plt.style.use(theme_matplotlib)
+        # plt.show()
 
 # generic filter of entities
 
