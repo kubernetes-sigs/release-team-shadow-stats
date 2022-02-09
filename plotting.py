@@ -5,7 +5,6 @@
 import matplotlib.pyplot as plt
 from collections import Counter
 from vars import *
-import math
 # generic method to display percentage and amount on charts
 
 
