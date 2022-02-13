@@ -15,8 +15,6 @@ class ApplicantData():
 def load_data(local_excel_f) -> ApplicantData:
     # Use pandas to load the local excel file and generate a dataframe
     df = pd.read_excel(local_excel_f)
-    pd.set_option('display.max_columns', 85)
-    pd.set_option('display.max_rows', 85)
 
     # Filter applicants by returning release team members and new applicants
     returners = df[df[schema_previously_served].str.contains("Yes")]

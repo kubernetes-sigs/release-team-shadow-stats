@@ -5,61 +5,53 @@
 from __future__ import annotations
 from io import TextIOWrapper
 from vars import *
+from dataclasses import dataclass
 
 
-class GeneralInfo():
-    # email: str
-    # name: str
-    # pronoun: str
-    # slack_handle: str
-    # github_handle: str
-    # affiliation: str
-    def __init__(self, email, name, pronoun, slack_handle, github_handle, affiliation) -> None:
-        self.email = email
-        self.name = name
-        self.pronoun = pronoun
-        self.slack_handle = slack_handle
-        self.github_handle = github_handle
-        self.affiliation = affiliation
+@dataclass(frozen=True, order=True)
+class GeneralInfo:
+    email: str
+    name: str
+    pronoun: str
+    slack_handle: str
+    github_handle: str
+    affiliation: str
 
-
+@dataclass(frozen=True, order=True)
 class NewcomerInfo():
-    def __init__(self, general_info: GeneralInfo, interested_roles, read_role_handbook, why_interested, feedback_handbook, timeestimate_commit_to_releaseteam,
-                 able_to_attend_release_team_meetings, able_to_attend_burndown_meetings, scheduled_conflicts, volunteer_for_upcoming_cycles, timezone, experience_contributing,
-                 signed_cla, k8s_org_member, prior_release_teams, relevant_experience, goals, contribution_plans, comments, applied_previously) -> None:
-        self.general_info = general_info
-        self.interested_roles = interested_roles
-        self.read_role_handbook = read_role_handbook
-        self.why_interested = why_interested
-        self.feedback_handbook = feedback_handbook
-        self.timeestimate_commit_to_releaseteam = timeestimate_commit_to_releaseteam
-        self.able_to_attend_release_team_meetings = able_to_attend_release_team_meetings
-        self.able_to_attend_burndown_meetings = able_to_attend_burndown_meetings
-        self.scheduled_conflicts = scheduled_conflicts
-        self.volunteer_for_upcoming_cycles = volunteer_for_upcoming_cycles
-        self.timezone = timezone
-        self.experience_contributing = experience_contributing
-        self.signed_cla = signed_cla
-        self.k8s_org_member = k8s_org_member
-        self.prior_release_teams = prior_release_teams
-        self.relevant_experience = relevant_experience
-        self.goals = goals
-        self.contribution_plans = contribution_plans
-        self.comments = comments
-        self.applied_previously = applied_previously
+    general_info: str
+    interested_roles: str
+    read_role_handbook: str
+    why_interested: str
+    feedback_handbook: str
+    timeestimate_commit_to_releaseteam: str
+    able_to_attend_release_team_meetings: str
+    able_to_attend_burndown_meetings: str
+    scheduled_conflicts: str
+    volunteer_for_upcoming_cycles: str
+    timezone: str
+    experience_contributing: str
+    signed_cla: str
+    k8s_org_member: str
+    prior_release_teams: str
+    relevant_experience: str
+    goals: str
+    contribution_plans: str
+    comments: str
+    applied_previously: str
 
 
+@dataclass(frozen=True, order=True)
 class ReturnerInfo():
-    def __init__(self, general_info: GeneralInfo, previous_roles, previous_release_and_role, interested_roles, timezone, can_volunteer_for_up_coming_cycles, goals, contribution_plans, interested_in_stable_roster) -> None:
-        self.general_info = general_info
-        self.previous_roles = previous_roles
-        self.previous_release_and_role = previous_release_and_role
-        self.interested_roles = interested_roles
-        self.timezone = timezone
-        self.can_volunteer_for_up_coming_cycles = can_volunteer_for_up_coming_cycles
-        self.goals = goals
-        self.contribution_plans = contribution_plans
-        self.interested_in_stable_roster = interested_in_stable_roster
+    general_info: str
+    previous_roles: str
+    previous_release_and_role: str
+    interested_roles: str
+    timezone: str
+    can_volunteer_for_up_coming_cycles: str
+    goals: str
+    contribution_plans: str
+    interested_in_stable_roster: str
 
 
 def write_newcomer_applications_to_file(team, newcomerInfos: list[NewcomerInfo]):
@@ -140,4 +132,4 @@ def _new_application_file(team: str, group: str) -> TextIOWrapper:
 def _write_applicant_header(f: TextIOWrapper, id: str, team: str, general_info: GeneralInfo):
     f.writelines(f"\n## {id} {general_info.name} for {team}\n")
     f.writelines(
-        f"**Pronoun**: {general_info.pronoun}, **Slack** {general_info.slack_handle}, **GitHub** {general_info.github_handle}, **Affiliation**: {general_info.affiliation}\n")
+        f"**Pronoun**: {general_info.pronoun}, **Slack** {general_info.slack_handle}, **GitHub** {general_info.github_handle}, **Affiliation**: {general_info.affiliation}, **Email**: {general_info.email}\n")

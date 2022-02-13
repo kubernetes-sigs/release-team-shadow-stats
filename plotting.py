@@ -138,11 +138,12 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     print(f"Newcomer & Returner applicants{team}")
     fig2, ax2 = plt.subplots()
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
-    if not team_returners_and_newcomers == [0,0]:
-        ax2.pie(team_returners_and_newcomers, 
-            labels=[group_returners.capitalize(), group_newcomers.capitalize()], 
-            autopct=make_autopct(team_returners_and_newcomers)
-            )
+    if not team_returners_and_newcomers == [0, 0]:
+        ax2.pie(team_returners_and_newcomers,
+                labels=[group_returners.capitalize(
+                ), group_newcomers.capitalize()],
+                autopct=make_autopct(team_returners_and_newcomers)
+                )
         ax2.axis('equal')
         plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
         plt.style.use(theme_matplotlib)
