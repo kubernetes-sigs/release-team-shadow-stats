@@ -4,7 +4,7 @@ from vars import *
 import pandas as pd
 
 
-class ApplicantData():
+class ApplicantDataframes():
     def __init__(self, df, returners, newcomers, release_teams) -> None:
         self.df = df
         self.returners = returners
@@ -12,7 +12,7 @@ class ApplicantData():
         self.release_teams = release_teams
 
 
-def load_data(local_excel_f) -> ApplicantData:
+def load_data(local_excel_f) -> ApplicantDataframes:
     # Use pandas to load the local excel file and generate a dataframe
     df = pd.read_excel(local_excel_f)
 
@@ -33,11 +33,11 @@ def load_data(local_excel_f) -> ApplicantData:
             group_returners: teamApplicantsReturners,
             group_newcomers: teamApplicantsNewcomers
         }
-    return ApplicantData(df, returners, newcomers, release_teams)
+    return ApplicantDataframes(df, returners, newcomers, release_teams)
 
 
 # Some general plotting
-def general_plotting(a: ApplicantData):
+def general_plotting(a: ApplicantDataframes):
     # General sig release wide charts
     filter_entities(a.newcomers[schema_newcomers_timezone].tolist() + a.returners[schema_returners_timezone].tolist(), "Timezone",
                     aliases=timezone_aliases,
@@ -55,7 +55,7 @@ def general_plotting(a: ApplicantData):
 
 
 # Team specific plotting
-def team_plotting(a: ApplicantData):
+def team_plotting(a: ApplicantDataframes):
     for team in a.release_teams:
         print(f"\n\n{team}")
         newcomers_and_returners(
@@ -72,7 +72,7 @@ def team_plotting(a: ApplicantData):
 # Create applicant markdown files
 
 # method used to write returner applications to a markdown file
-def _returner_applications(team, a: ApplicantData):
+def _returner_applications(team, a: ApplicantDataframes):
     team_returning_applicants = []
     indexes = a.release_teams[team][group_returners].index
     returners = a.release_teams[team][group_returners]
@@ -83,8 +83,7 @@ def _returner_applications(team, a: ApplicantData):
                          returners[schema_slack][i],
                          returners[schema_github][i],
                          returners[schema_affiliation][i])
-        ai = ReturnerInfo(ag,
-                          returners[schema_returners_previous_roles][i],
+        ai = ReturnerInfo(returners[schema_returners_previous_roles][i],
                           returners[schema_returners_previous_release_and_role][i],
                           returners[schema_returners_interested_in_roles][i],
                           returners[schema_returners_timezone][i],
@@ -92,12 +91,13 @@ def _returner_applications(team, a: ApplicantData):
                           returners[schema_returners_goals][i],
                           returners[schema_returners_contribution_plans][i],
                           returners[schema_returners_interested_in_stable_roster][i])
-        team_returning_applicants.append(ai)
-    write_returner_applications_to_file(team, team_returning_applicants)
+        team_returning_applicants.append(ApplicantData(ag, ai))
+    write_applications_to_file(
+        team, group_returners, team_returning_applicants)
 
 
 # method used to write newcomer applications to a markdown file
-def _newcomer_applications(team, a: ApplicantData):
+def _newcomer_applications(team, a: ApplicantDataframes):
     team_newcomer_applicants = []
     indexes = a.release_teams[team][group_newcomers].index
     nc = a.release_teams[team][group_newcomers]
@@ -108,8 +108,7 @@ def _newcomer_applications(team, a: ApplicantData):
                          nc[schema_slack][i],
                          nc[schema_github][i],
                          nc[schema_affiliation][i])
-        ai = NewcomerInfo(general_info=ag,
-                          interested_roles=nc[schema_newcomers_interested_in_roles][i],
+        ai = NewcomerInfo(interested_roles=nc[schema_newcomers_interested_in_roles][i],
                           read_role_handbook=nc[schema_newcomers_read_handbook][i],
                           why_interested=nc[schema_newcomers_why_interested][i],
                           feedback_handbook=nc[schema_newcomers_handbook_questions][i],
@@ -128,11 +127,11 @@ def _newcomer_applications(team, a: ApplicantData):
                           contribution_plans=nc[schema_newcomers_contribution_plans][i],
                           comments=nc[schema_newcomers_comments][i],
                           applied_previously=nc[schema_newcomers_applied_previously][i])
-        team_newcomer_applicants.append(ai)
-    write_newcomer_applications_to_file(team, team_newcomer_applicants)
+        team_newcomer_applicants.append(ApplicantData(ag, ai))
+    write_applications_to_file(team, group_newcomers, team_newcomer_applicants)
 
 
-def generate_application_summaries(a: ApplicantData):
+def generate_application_summaries(a: ApplicantDataframes):
     for team in a.release_teams:
         _returner_applications(team, a)
         _newcomer_applications(team, a)
