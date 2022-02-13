@@ -2,13 +2,13 @@
 # This file contains logic to generate diagrams with matplotlib
 #
 
-import matplotlib.pyplot as plt
 from collections import Counter
+import matplotlib.pyplot as plt
 from vars import *
 
 
-# generic method to display percentage and amount on charts
 def make_autopct(values):
+    """generic method to display percentage and amount on charts"""
     def my_autopct(pct):
         total = sum(values)
         val = int(round(pct*total/100.0))
@@ -20,9 +20,9 @@ def make_autopct(values):
 #
 
 
-# Applicants by team
 def applicants_by_team(total_applicants, release_teams_dict_df):
-    release_team_applicants = [len(v[group_newcomers]) + len(v[group_returners])
+    """Applicants by team"""
+    release_team_applicants = [len(v[GROUP_NEWCOMERS]) + len(v[GROUP_RETURNERS])
                                for _, v in release_teams_dict_df.items()]
     _, ax1 = plt.subplots()
     ax1.pie(release_team_applicants, labels=release_teams_dict_df.keys(),
@@ -31,12 +31,12 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
     print("SIG-Release applicants by team")
     print(
         f"Total applicants: {total_applicants}, which applied to one or multiple teams")
-    plt.style.use(theme_matplotlib)
+    plt.style.use(THEME_MARPLOTLIB)
     plt.savefig(get_plot_file("applicants-by-team"))
 
 
-# Rejected newcomers which apply again
 def reapplying_newcomers(newcomers_applied_previously, team=""):
+    """Rejected newcomers which apply again"""
     print("Rejected newcomers which apply again")
     apply_again = {"Reapplying newcomers": 0,
                    "First time applicants": 0, "Unclear": 0}
@@ -48,18 +48,17 @@ def reapplying_newcomers(newcomers_applied_previously, team=""):
             apply_again["First time applicants"] += 1
         else:
             apply_again["Unclear"] += 1
-    fig4, ax5 = plt.subplots()
+    _, ax5 = plt.subplots()
     ax5.pie(apply_again.values(), labels=apply_again.keys(),
             autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
-    plt.style.use(theme_matplotlib)
+    plt.style.use(THEME_MARPLOTLIB)
     plt.savefig(get_plot_file(
         f"reapplying-newcomers-{team.replace(' ', '').lower()}"))
 
 
-# chart to highlight applicant pronouns
-# @data: string[]
-def pronouns_chart(data, team=""):
+def pronouns_chart(data: list[str], team=""):
+    """chart to highlight applicant pronouns"""
     print(f"Pronouns {team}")
     _, ax4 = plt.subplots()
     applicant_pronouns = {"he/they": 0, "he/him": 0, "she/her": 0, "she/they": 0,
@@ -93,7 +92,7 @@ def pronouns_chart(data, team=""):
     ax4.pie(resize_applicant_pronouns.values(), labels=resize_applicant_pronouns.keys(
     ), autopct=make_autopct(resize_applicant_pronouns.values()))
     ax4.axis('equal')
-    plt.style.use(theme_matplotlib)
+    plt.style.use(THEME_MARPLOTLIB)
     plt.savefig(get_plot_file(f"pronouns-{team.replace(' ', '').lower()}"))
 
 
@@ -115,11 +114,11 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
     if team != "" and team in applied_to_team_as_well.keys():
         del applied_to_team_as_well[team]
         print(
-            f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][group_returners]) + len(release_teams[team][group_newcomers])} also applied to one or more of the other teams")
+            f"{number_of_applicants_which_also_applied_to_another_team} of {len(release_teams[team][GROUP_RETURNERS]) + len(release_teams[team][GROUP_NEWCOMERS])} also applied to one or more of the other teams")
         ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
         ), autopct=make_autopct(applied_to_team_as_well.values()))
         ax3.axis('equal')
-        plt.style.use(theme_matplotlib)
+        plt.style.use(THEME_MARPLOTLIB)
         plt.savefig(get_plot_file(
             f"applied-to-other-teams-{team.replace(' ', '').lower()}"))
 
@@ -133,12 +132,12 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
     if not team_returners_and_newcomers == [0, 0]:
         ax2.pie(team_returners_and_newcomers,
-                labels=[group_returners.capitalize(
-                ), group_newcomers.capitalize()],
+                labels=[GROUP_RETURNERS.capitalize(
+                ), GROUP_NEWCOMERS.capitalize()],
                 autopct=make_autopct(team_returners_and_newcomers)
                 )
         ax2.axis('equal')
-        plt.style.use(theme_matplotlib)
+        plt.style.use(THEME_MARPLOTLIB)
         plt.savefig(get_plot_file(
             f"returners-and-newcomers{team.replace(' ', '').lower()}"))
 
@@ -181,6 +180,6 @@ def filter_entities(entities_list, entities_description="", keywords=[], aliases
     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(
     ), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')
-    plt.style.use(theme_matplotlib)
+    plt.style.use(THEME_MARPLOTLIB)
     plt.savefig(get_plot_file(
         f"entities-{entities_description.replace(' ', '').lower()}{team.replace(' ', '').lower()}"))
