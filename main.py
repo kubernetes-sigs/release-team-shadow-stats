@@ -1,6 +1,4 @@
 from applicants import *
-from aliases import *
-from schema import *
 from plotting import *
 from vars import *
 import pandas as pd
