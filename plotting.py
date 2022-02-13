@@ -32,9 +32,8 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
     print("SIG-Release applicants by team")
     print(
         f"Total applicants: {total_applicants}, which applied to one or multiple teams")
-    plt.savefig(get_plot_file("applicants-by-team"))
     plt.style.use(theme_matplotlib)
-    # plt.show()
+    plt.savefig(get_plot_file("applicants-by-team"))
 
 # Rejected newcomers which apply again
 
@@ -55,9 +54,8 @@ def reapplying_newcomers(newcomers_applied_previously, team=""):
     ax5.pie(apply_again.values(), labels=apply_again.keys(),
             autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
-    plt.savefig(get_plot_file(f"reapplying-newcomers{team}"))
     plt.style.use(theme_matplotlib)
-    # plt.show()
+    plt.savefig(get_plot_file(f"reapplying-newcomers-{team.replace(' ', '').lower()}"))
 
 # chart to highlight applicant pronouns
 # @data: string[]
@@ -97,9 +95,8 @@ def pronouns_chart(data, team=""):
     ax4.pie(resize_applicant_pronouns.values(), labels=resize_applicant_pronouns.keys(
     ), autopct=make_autopct(resize_applicant_pronouns.values()))
     ax4.axis('equal')
-    plt.savefig(get_plot_file(f"pronouns{team}"))
     plt.style.use(theme_matplotlib)
-    # plt.show()
+    plt.savefig(get_plot_file(f"pronouns-{team.replace(' ', '').lower()}"))
 
 # filter applicants which also applied to another team
 # @applicants_interested_in_roles series[]
@@ -125,9 +122,8 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
         ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
         ), autopct=make_autopct(applied_to_team_as_well.values()))
         ax3.axis('equal')
-        plt.savefig(get_plot_file(f"applied-to-other-teams-{team}"))
         plt.style.use(theme_matplotlib)
-        # plt.show()
+        plt.savefig(get_plot_file(f"applied-to-other-teams-{team.replace(' ', '').lower()}"))
 
 # filter newcomers and returners by team
 
@@ -145,14 +141,13 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
                 autopct=make_autopct(team_returners_and_newcomers)
                 )
         ax2.axis('equal')
-        plt.savefig(get_plot_file(f"returners-and-newcomers{team}"))
         plt.style.use(theme_matplotlib)
-        # plt.show()
+        plt.savefig(get_plot_file(f"returners-and-newcomers{team.replace(' ', '').lower()}"))
 
 # generic filter of entities
 
 
-def filter_entities(entities_list, entities_description="Entities", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False, team=""):
+def filter_entities(entities_list, entities_description="", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False, team=""):
     # clean entities
     clean_entities = []
     for a in entities_list:
@@ -189,6 +184,6 @@ def filter_entities(entities_list, entities_description="Entities", keywords=[],
     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(
     ), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')
-    plt.savefig(get_plot_file(f"entites{entities_description}{team}"))
     plt.style.use(theme_matplotlib)
-    # plt.show()
+    plt.savefig(get_plot_file(
+        f"entities-{entities_description.replace(' ', '').lower()}{team.replace(' ', '').lower()}"))
