@@ -1,13 +1,13 @@
 #
-# This file contains logic to generate diagrams
+# This file contains logic to generate diagrams with matplotlib
 #
 
 import matplotlib.pyplot as plt
 from collections import Counter
 from vars import *
+
+
 # generic method to display percentage and amount on charts
-
-
 def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
@@ -19,13 +19,12 @@ def make_autopct(values):
 # CHARTS
 #
 
+
 # Applicants by team
-
-
 def applicants_by_team(total_applicants, release_teams_dict_df):
     release_team_applicants = [len(v[group_newcomers]) + len(v[group_returners])
                                for _, v in release_teams_dict_df.items()]
-    fig1, ax1 = plt.subplots()
+    _, ax1 = plt.subplots()
     ax1.pie(release_team_applicants, labels=release_teams_dict_df.keys(),
             autopct=make_autopct(release_team_applicants))
     ax1.axis('equal')
@@ -35,9 +34,8 @@ def applicants_by_team(total_applicants, release_teams_dict_df):
     plt.style.use(theme_matplotlib)
     plt.savefig(get_plot_file("applicants-by-team"))
 
+
 # Rejected newcomers which apply again
-
-
 def reapplying_newcomers(newcomers_applied_previously, team=""):
     print("Rejected newcomers which apply again")
     apply_again = {"Reapplying newcomers": 0,
@@ -55,15 +53,15 @@ def reapplying_newcomers(newcomers_applied_previously, team=""):
             autopct=make_autopct(apply_again.values()))
     ax5.axis('equal')
     plt.style.use(theme_matplotlib)
-    plt.savefig(get_plot_file(f"reapplying-newcomers-{team.replace(' ', '').lower()}"))
+    plt.savefig(get_plot_file(
+        f"reapplying-newcomers-{team.replace(' ', '').lower()}"))
+
 
 # chart to highlight applicant pronouns
 # @data: string[]
-
-
 def pronouns_chart(data, team=""):
     print(f"Pronouns {team}")
-    fig4, ax4 = plt.subplots()
+    _, ax4 = plt.subplots()
     applicant_pronouns = {"he/they": 0, "he/him": 0, "she/her": 0, "she/they": 0,
                           "they/them": 0, "ze": 0, "neopronouns": 0, "other": 0}
     for e in data:
@@ -98,14 +96,13 @@ def pronouns_chart(data, team=""):
     plt.style.use(theme_matplotlib)
     plt.savefig(get_plot_file(f"pronouns-{team.replace(' ', '').lower()}"))
 
+
 # filter applicants which also applied to another team
 # @applicants_interested_in_roles series[]
-
-
 def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_teams={}):
     print(f"{team} applicants applied to other teams")
     number_of_applicants_which_also_applied_to_another_team = 0
-    fig3, ax3 = plt.subplots()
+    _, ax3 = plt.subplots()
     applied_to_team_as_well = dict()
     for l in applicants_interested_in_roles:
         for e in l:
@@ -123,16 +120,16 @@ def applied_for_multiple_teams(applicants_interested_in_roles, team="", release_
         ), autopct=make_autopct(applied_to_team_as_well.values()))
         ax3.axis('equal')
         plt.style.use(theme_matplotlib)
-        plt.savefig(get_plot_file(f"applied-to-other-teams-{team.replace(' ', '').lower()}"))
+        plt.savefig(get_plot_file(
+            f"applied-to-other-teams-{team.replace(' ', '').lower()}"))
+
 
 # filter newcomers and returners by team
-
-
 def newcomers_and_returners(returners_df, newcomers_df, team=""):
     if team != "":
         team = f" for {team}"
     print(f"Newcomer & Returner applicants{team}")
-    fig2, ax2 = plt.subplots()
+    _, ax2 = plt.subplots()
     team_returners_and_newcomers = [len(returners_df), len(newcomers_df)]
     if not team_returners_and_newcomers == [0, 0]:
         ax2.pie(team_returners_and_newcomers,
@@ -142,11 +139,11 @@ def newcomers_and_returners(returners_df, newcomers_df, team=""):
                 )
         ax2.axis('equal')
         plt.style.use(theme_matplotlib)
-        plt.savefig(get_plot_file(f"returners-and-newcomers{team.replace(' ', '').lower()}"))
+        plt.savefig(get_plot_file(
+            f"returners-and-newcomers{team.replace(' ', '').lower()}"))
+
 
 # generic filter of entities
-
-
 def filter_entities(entities_list, entities_description="", keywords=[], aliases={}, threshold=1, unreached_threshold_print=False, team=""):
     # clean entities
     clean_entities = []
@@ -180,7 +177,7 @@ def filter_entities(entities_list, entities_description="", keywords=[], aliases
 
     # create chart
     print(f"\n{entities_description} of applicants with a threshold of {threshold}")
-    fig6, ax6 = plt.subplots()
+    _, ax6 = plt.subplots()
     ax6.pie(affiliation_dict_threshold.values(), labels=affiliation_dict_threshold.keys(
     ), autopct=make_autopct(affiliation_dict_threshold.values()))
     ax6.axis('equal')

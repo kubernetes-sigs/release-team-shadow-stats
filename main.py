@@ -2,6 +2,7 @@ from applicants import *
 from plotting import *
 from vars import *
 import pandas as pd
+import flag
 
 
 class ApplicantDataframes():
@@ -131,6 +132,7 @@ def _newcomer_applications(team, a: ApplicantDataframes):
     write_applications_to_file(team, group_newcomers, team_newcomer_applicants)
 
 
+# generate applicantion summary markdown files
 def generate_application_summaries(a: ApplicantDataframes):
     for team in a.release_teams:
         _returner_applications(team, a)
@@ -138,9 +140,18 @@ def generate_application_summaries(a: ApplicantDataframes):
 
 
 if __name__ == "__main__":
-    local_excel_file = "./Kubernetes 1.24 Release Team Shadow Application (Responses).xlsx"
-    a = load_data(local_excel_f=local_excel_file)
+    # define flags
+    local_excel_file = flag.string("file", "application-release-team-1.24.xlsx", "Applicant data source xlsx file")
+    flag.parse()
 
-    general_plotting(a)
-    team_plotting(a)
-    generate_application_summaries(a)
+    # try to open the specified file
+    try:
+        applicantionDf = load_data(local_excel_f=local_excel_file.val())
+    except Exception as e: print(e)
+
+    # create plots / charts
+    general_plotting(applicantionDf)
+    team_plotting(applicantionDf)
+
+    # generate applicantion summary markdown files
+    generate_application_summaries(applicantionDf)

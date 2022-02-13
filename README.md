@@ -94,6 +94,6 @@ Template for newcomers:
 
 Create local virtual environment `python3 -m venv tutorial-env` and activate the virtual environment with `source venv/bin/activate`.
 Install all dependencies with `pip install -r requirements.txt`. To update the requirements run `pip freeze > requirements.txt`. 
-To generate the plots and applicant summaries run `python main.py`.
+To generate the plots and applicant summaries run `python main.py --file=your-file.xlsx`.
 Make sure to place a matching xlsx file to the root dir of the project.
 
