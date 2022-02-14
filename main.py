@@ -30,14 +30,25 @@ def load_data(local_excel_f) -> ApplicantDataframes:
         "No")]
 
     release_teams = {
-        TEAM_BUGTRIAGE: {}, TEAM_CISIGNAL: {}, TEAM_COMMUNICATIONS: {}, TEAM_RELEASE_NOTES: {}, TEAM_DOCS: {}, TEAM_ENHANCEMENTS: {}
+        TEAM_BUGTRIAGE: {},
+        TEAM_CISIGNAL: {},
+        TEAM_COMMUNICATIONS: {},
+        TEAM_RELEASE_NOTES: {},
+        TEAM_DOCS: {},
+        TEAM_ENHANCEMENTS: {}
     }
 
     for team in release_teams:
-        team_applicants_returners = returners[returners[SCHEMA_RETURNERS_INTERESTED_IN_ROLES].str.contains(
-            team)]
-        team_applicants_newcomers = newcomers[newcomers[SCHEMA_NEWCOMERS_INTERESTED_IN_ROLES].str.contains(
-            team)]
+        team_applicants_returners = returners[
+            returners[
+                SCHEMA_RETURNERS_INTERESTED_IN_ROLES
+            ].str.contains(team)
+        ]
+        team_applicants_newcomers = newcomers[
+            newcomers[
+                SCHEMA_NEWCOMERS_INTERESTED_IN_ROLES
+            ].str.contains(team)
+        ]
         release_teams[team] = {
             GROUP_RETURNERS: team_applicants_returners,
             GROUP_NEWCOMERS: team_applicants_newcomers
@@ -87,6 +98,27 @@ def general_plotting(a_df: ApplicantDataframes):
     )
     applicants_by_team(len(a_df.df_all), a_df.release_teams)
     pronouns_chart(a_df.df_all[SCHEMA_PRONOUNS])
+    filter_entities(
+        EntityPlottingConfig(
+            entities_list=a_df.df_all[SCHEMA_AFFILIATION].tolist(),
+            description="Pronouns",
+            keywords=[
+                "he/they",
+                "he/him",
+                "she/her",
+                "she/they",
+                "they/them",
+                "ze",
+                "neopronouns",
+                "other"
+            ],
+            aliases={
+                "redhat": "red hat",
+                "freelancer": "independent",
+                "independant": "independent"
+            }
+        )
+    )
     reapplying_newcomers(
         a_df.df_newcomers[SCHEMA_NEWCOMERS_APPLIED_PREVIOUSLY])
     newcomers_and_returners(a_df.df_returners, a_df.df_newcomers)

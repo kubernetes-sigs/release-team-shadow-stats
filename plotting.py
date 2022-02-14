@@ -14,7 +14,7 @@ def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
         val = int(round(pct*total/100.0))
-        return '{p:.2f}%  ({v:d})'.format(p=pct, v=val)
+        return f"{pct:.2f}%  ({val:d})"
     return my_autopct
 
 #
