@@ -4,17 +4,19 @@
 
 from __future__ import annotations
 from io import TextIOWrapper
-from vars import *
 from dataclasses import dataclass
 from abc import ABC
+from vars import *
 
 @dataclass(frozen=True, order=True)
 class ApplicantData:
+    """ApplicantData wrapper for applicant dataclasses"""
     general_info: GeneralInfo
     applicant: Applicant
 
 @dataclass(frozen=True, order=True)
 class GeneralInfo:
+    """GeneralInfo defines the data every applicants provides"""
     email: str
     name: str
     pronoun: str
@@ -22,10 +24,11 @@ class GeneralInfo:
     github_handle: str
     affiliation: str
 class Applicant(ABC):
-    pass
+    """Applicant abstract class for a kind of applicant (newcomer & returner)"""
 
 @dataclass(frozen=True, order=True)
-class NewcomerInfo(Applicant):
+class NewcomerApplicant(Applicant):
+    """NewcomerApplicant implemented Applicant that defines the data newcomer applicants provides"""
     interested_roles: str
     read_role_handbook: str
     why_interested: str
@@ -48,7 +51,8 @@ class NewcomerInfo(Applicant):
 
 
 @dataclass(frozen=True, order=True)
-class ReturnerInfo(Applicant):
+class ReturnerApplicant(Applicant):
+    """ReturnerApplicant implemented Applicant that defines the data returner applicants provides"""
     previous_roles: str
     previous_release_and_role: str
     interested_roles: str
@@ -59,9 +63,9 @@ class ReturnerInfo(Applicant):
     interested_in_stable_roster: str
 
 
-# write_applications_to_file is used to generate markdown file from the above specified dataclasses
-#   for returners and newcomers
 def write_applications_to_file(team, group, applicant_data_list: list[ApplicantData]):
+    """write_applications_to_file is used to generate markdown
+    file from the above specified dataclasses for returners and newcomers"""
     file = _create_md_file(team, group)
     i = 1
     for d in applicant_data_list:
@@ -87,8 +91,8 @@ def write_applications_to_file(team, group, applicant_data_list: list[ApplicantD
     file.close()
 
 
-# create a new file to store applicant information to
 def _create_md_file(team: str, group: str) -> TextIOWrapper:
+    """create a new file to store applicant information to"""
     file = open(get_applicants_file(team, group), "w+")
     file.writelines(
         f"# {group.capitalize()} applicant for team {team}\n")

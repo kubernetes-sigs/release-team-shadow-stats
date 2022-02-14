@@ -1,9 +1,10 @@
-"""Constants for processing applicant data"""
+"""Constants and functions to processing applicant data and define conventions"""
 
+# dataframe 
 GROUP_RETURNERS = "returners"
 GROUP_NEWCOMERS = "newcomers"
 
-# Release team names
+# Release team sub team names
 TEAM_BUGTRIAGE = "Bug Triage"
 TEAM_CISIGNAL = "CI Signal"
 TEAM_COMMUNICATIONS = "Communications"
@@ -11,17 +12,16 @@ TEAM_RELEASE_NOTES = "Release Notes"
 TEAM_DOCS = "Documentation"
 TEAM_ENHANCEMENTS = "Enhancements"
 
+# Folders
 APPLICANTS_FOLDER = "applicants"
+PLOT_FOLDER = "plots"
 
+# Themes
+THEME_MARPLOTLIB = 'ggplot'
 
 def get_applicants_file(team_name, group):
     """function to define how to format markdown file names"""
     return f"./{APPLICANTS_FOLDER}/{team_name}-{group}.md"
-
-
-PLOT_FOLDER = "plots"
-
-THEME_MARPLOTLIB = 'ggplot'
 
 
 def get_plot_file(filename):
@@ -51,8 +51,7 @@ timezone_aliases = {
 }
 
 
-# Schema variables reference column headers of the applicant excel file
-# TODO: dynamic schema
+# Schema variables reference column headers of the applicant excel file TODO: dynamic schema
 RELEASE_VERSION = "1.24"
 
 # General applicant infos
