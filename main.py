@@ -98,27 +98,6 @@ def general_plotting(a_df: ApplicantDataframes):
     )
     applicants_by_team(len(a_df.df_all), a_df.release_teams)
     pronouns_chart(a_df.df_all[SCHEMA_PRONOUNS])
-    filter_entities(
-        EntityPlottingConfig(
-            entities_list=a_df.df_all[SCHEMA_AFFILIATION].tolist(),
-            description="Pronouns",
-            keywords=[
-                "he/they",
-                "he/him",
-                "she/her",
-                "she/they",
-                "they/them",
-                "ze",
-                "neopronouns",
-                "other"
-            ],
-            aliases={
-                "redhat": "red hat",
-                "freelancer": "independent",
-                "independant": "independent"
-            }
-        )
-    )
     reapplying_newcomers(
         a_df.df_newcomers[SCHEMA_NEWCOMERS_APPLIED_PREVIOUSLY])
     newcomers_and_returners(a_df.df_returners, a_df.df_newcomers)
