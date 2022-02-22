@@ -9,7 +9,7 @@ This project is being developed in the scope of Kubernetes [sig-release](https:/
 ## Summary
 This project is designed to support at the release team shadow selection process. It should be used in the shadow selection phase and to communicate transparently with the community about the current status of the release team shadow program.    
 
-**Goals**:
+**Project Goals**:
 * Improve the release team shadow selection process
 * Provide some transparency about the current shadow program
 
@@ -97,3 +97,13 @@ Install all dependencies with `pip install -r requirements.txt`. To update the r
 To generate the plots and applicant summaries run `python main.py --file=your-file.xlsx`.
 Make sure to place a matching xlsx file to the root dir of the project.
 
+## Community, discussion, contribution, and support
+You can reach the maintainers of this project at:
+
+* [Kubernetes Slack](https://slack.k8s.io/) at `#sig-release` and `#release-ci-signal`
+
+## Sponsoring SIG's
+* [`sig-release`](https://github.com/kubernetes/sig-release)
+
+## Code of conduct
+Participation in the Kubernetes community is governed by the Kubernetes [Code of Conduct](code-of-conduct.md).
