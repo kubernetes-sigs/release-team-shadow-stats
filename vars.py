@@ -14,7 +14,7 @@
 
 """Constants and functions to processing applicant data and define conventions"""
 
-# dataframe 
+# dataframe
 GROUP_RETURNERS = "returners"
 GROUP_NEWCOMERS = "newcomers"
 
@@ -26,12 +26,16 @@ TEAM_RELEASE_NOTES = "Release Notes"
 TEAM_DOCS = "Documentation"
 TEAM_ENHANCEMENTS = "Enhancements"
 
+RELEASE_TEAM_TEAMS = [TEAM_BUGTRIAGE, TEAM_CISIGNAL,
+                      TEAM_COMMUNICATIONS, TEAM_RELEASE_NOTES, TEAM_DOCS, TEAM_ENHANCEMENTS]
+
 # Folders
 APPLICANTS_FOLDER = "applicants"
 PLOT_FOLDER = "plots"
 
 # Themes
 THEME_MARPLOTLIB = 'ggplot'
+
 
 def get_applicants_file(team_name, group):
     """function to define how to format markdown file names"""
@@ -41,6 +45,30 @@ def get_applicants_file(team_name, group):
 def get_plot_file(filename):
     """function to define how to format plot file names"""
     return f"./{PLOT_FOLDER}/{filename}.png"
+
+
+company_keywords = [
+    "student",
+    "liquid reply",
+    "vmware",
+    "microsoft",
+    "red hat",
+    "institute",
+    "cisco",
+    "ibm",
+    "apple",
+    "suse",
+    "google",
+    "independent",
+    "deloitte",
+    "adeste"
+]
+
+company_aliases = {
+    "redhat": "red hat",
+    "freelancer": "independent",
+    "independant": "independent"
+}
 
 
 timezone_aliases = {
@@ -64,6 +92,8 @@ timezone_aliases = {
     "utc": "london gmt+0"
 }
 
+pronouns = ["he/they", "he/him", "she/her", "she/they",
+            "they/them", "ze", "neopronouns", "other"]
 
 # Schema variables reference column headers of the applicant excel file TODO: dynamic schema
 RELEASE_VERSION = "1.24"
