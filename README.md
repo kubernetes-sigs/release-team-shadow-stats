@@ -25,6 +25,8 @@ Pronouns Example
 ![example: pronouns](./examples/plots/pronouns-.png)
 ...more charts can be found under `examples/plots`
 
+By running `python main.py --test=1` dummy applicant data is getting generated.
+
 ## How to work on this project
 
 Create local virtual environment `python3 -m venv tutorial-env` and activate the virtual environment with `source venv/bin/activate`.
