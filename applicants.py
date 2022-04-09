@@ -20,11 +20,13 @@ from __future__ import annotations
 from io import TextIOWrapper
 from dataclasses import dataclass, field
 from abc import ABC
+import string
 from vars import *
 from fake_data import *
 
+
 class Applicants():
-    def __init__(self, all: list[Applicant], returners: list[ReturnerApplicant], newcomers: list[ReturnerApplicant], applicants_by_team) -> None:
+    def __init__(self, all: list[ApplicantData], returners: list[ApplicantData], newcomers: list[ApplicantData], applicants_by_team) -> None:
         # all applicant data
         self.all = all
         # subset: only applicant data from returner applicants
@@ -34,36 +36,40 @@ class Applicants():
         # subset map for each release-team sub-team
         self.applicants_by_team = applicants_by_team
 
-    def key_series_all(self, k) -> tuple(list[ReturnerApplicant], list[NewcomerApplicant]):
-        returner_applicant_keys = []
-        newcomer_applicant_keys = []
+    # def key_series_all(self, k) -> tuple(list[ReturnerApplicant], list[NewcomerApplicant]):
+    #     returner_applicant_keys = []
+    #     newcomer_applicant_keys = []
 
-        for r in self.returners:
-            pass
+    #     for r in self.returners:
+    #         returner_applicant_keys.append(r.)
 
-        return returner_applicant_keys, newcomer_applicant_keys
+    #     for n in self.returners:
+    #         pass
+
+    #     return returner_applicant_keys, newcomer_applicant_keys
+
 
 @dataclass(order=True)
 class ApplicantData:
     """ApplicantData wrapper for applicant dataclasses"""
-    general_info: GeneralInfo
-    applicant: Applicant
+    a_general_info: GeneralInfo
+    a_specific_info: Applicant
 
     def __repr__(self) -> str:
-        return f'{repr(self.general_info)}\n{repr(self.applicant)}'
+        return f'{repr(self.a_general_info)}\n{repr(self.a_specific_info)}'
 
 
 @dataclass(order=True)
 class GeneralInfo:
     """GeneralInfo defines the data every applicants provides"""
-    email: str = field(default_factory=fake_get_email)
-    name: str = field(default_factory=fake_get_name)
-    pronoun: str = field(default_factory=fake_get_pronoun)
-    slack_handle: str = field(default_factory=fake_get_number_code)
-    github_handle: str = field(default_factory=fake_get_number_code)
-    affiliation: str = field(default_factory=fake_get_company)
+    email: string = field(default_factory=fake_get_email)
+    name: string = field(default_factory=fake_get_name)
+    pronoun: string = field(default_factory=fake_get_pronoun)
+    slack_handle: string = field(default_factory=fake_get_number_code)
+    github_handle: string = field(default_factory=fake_get_number_code)
+    affiliation: string = field(default_factory=fake_get_company)
 
-    # This method can be called to set empty string instead of the defaults 
+    # This method can be called to set empty string instead of the defaults
     def clean(self) -> GeneralInfo:
         for key in vars(self):
             self.__dict__[key] = ""
@@ -85,31 +91,31 @@ class Applicant(ABC):
 @dataclass(order=True)
 class NewcomerApplicant(Applicant):
     """NewcomerApplicant implemented Applicant that defines the data newcomer applicants provides"""
-    interested_roles: str = field(
+    interested_roles: string = field(
         default_factory=fake_get_release_team_team)
-    read_role_handbook: str = field(default_factory=fake_get_bool)
-    why_interested: str = field(default_factory=fake_get_pargraph)
-    feedback_handbook: str = field(default_factory=fake_get_pargraph)
-    timeestimate_commit_to_releaseteam: str = field(
+    read_role_handbook: string = field(default_factory=fake_get_bool)
+    why_interested: string = field(default_factory=fake_get_pargraph)
+    feedback_handbook: string = field(default_factory=fake_get_pargraph)
+    timeestimate_commit_to_releaseteam: string = field(
         default_factory=fake_get_pargraph)
-    able_to_attend_release_team_meetings: str = field(
+    able_to_attend_release_team_meetings: string = field(
         default_factory=fake_get_bool)
-    able_to_attend_burndown_meetings: str = field(
+    able_to_attend_burndown_meetings: string = field(
         default_factory=fake_get_bool)
-    scheduled_conflicts: str = field(default_factory=fake_get_pargraph)
-    volunteer_for_upcoming_cycles: str = field(default_factory=fake_get_bool)
-    timezone: str = field(default_factory=fake_get_timezone)
-    experience_contributing: str = field(default_factory=fake_get_pargraph)
-    signed_cla: str = field(default_factory=fake_get_bool)
-    k8s_org_member: str = field(default_factory=fake_get_bool)
-    prior_release_teams: str = field(default_factory=fake_get_pargraph)
-    relevant_experience: str = field(default_factory=fake_get_text)
-    goals: str = field(default_factory=fake_get_text)
-    contribution_plans: str = field(default_factory=fake_get_text)
-    comments: str = field(default_factory=fake_get_pargraph)
-    applied_previously: str = field(default_factory=fake_get_bool)
-    
-    # This method can be called to set empty string instead of the defaults 
+    scheduled_conflicts: string = field(default_factory=fake_get_pargraph)
+    volunteer_for_upcoming_cycles: string = field(default_factory=fake_get_bool)
+    timezone: string = field(default_factory=fake_get_timezone)
+    experience_contributing: string = field(default_factory=fake_get_pargraph)
+    signed_cla: string = field(default_factory=fake_get_bool)
+    k8s_org_member: string = field(default_factory=fake_get_bool)
+    prior_release_teams: string = field(default_factory=fake_get_pargraph)
+    relevant_experience: string = field(default_factory=fake_get_text)
+    goals: string = field(default_factory=fake_get_text)
+    contribution_plans: string = field(default_factory=fake_get_text)
+    comments: string = field(default_factory=fake_get_pargraph)
+    applied_previously: string = field(default_factory=fake_get_bool)
+
+    # This method can be called to set empty string instead of the defaults
     def clean(self) -> NewcomerApplicant:
         for key in vars(self):
             self.__dict__[key] = ""
@@ -119,25 +125,26 @@ class NewcomerApplicant(Applicant):
         class_vars = {k: v for k, v in vars(self).items() if v is not None}
         s = ""
         for k in class_vars:
-            s += f"**{k.replace('_', ' ').capitalize()}**: {class_vars[k]} \n"
+            s += f"* **{k.replace('_', ' ').capitalize()}**: {class_vars[k]} \n"
         return s
+
 
 @dataclass(order=True)
 class ReturnerApplicant(Applicant):
     """ReturnerApplicant implemented Applicant that defines the data returner applicants provides"""
-    previous_roles: str = field(default_factory=fake_get_release_team_team)
-    previous_release_and_role: str = field(
+    previous_roles: string = field(default_factory=fake_get_release_team_team)
+    previous_release_and_role: string = field(
         default_factory=fake_get_release_team_team)
-    interested_roles: str = field(
+    interested_roles: string = field(
         default_factory=fake_get_release_team_team)
-    timezone: str = field(default_factory=fake_get_timezone)
-    can_volunteer_for_up_coming_cycles: str = field(
+    timezone: string = field(default_factory=fake_get_timezone)
+    can_volunteer_for_up_coming_cycles: string = field(
         default_factory=fake_get_bool)
-    goals: str = field(default_factory=fake_get_text)
-    contribution_plans: str = field(default_factory=fake_get_text)
-    interested_in_stable_roster: str = field(default_factory=fake_get_bool)
+    goals: string = field(default_factory=fake_get_text)
+    contribution_plans: string = field(default_factory=fake_get_text)
+    interested_in_stable_roster: string = field(default_factory=fake_get_bool)
 
-    # This method can be called to set empty string instead of the defaults 
+    # This method can be called to set empty string instead of the defaults
     def clean(self) -> ReturnerApplicant:
         for key in vars(self):
             self.__dict__[key] = ""
@@ -147,7 +154,7 @@ class ReturnerApplicant(Applicant):
         class_vars = {k: v for k, v in vars(self).items() if v is not None}
         s = ""
         for k in class_vars:
-            s += f"**{k.replace('_', ' ').capitalize()}**: {class_vars[k]} \n"
+            s += f"* **{k.replace('_', ' ').capitalize()}**: {class_vars[k]} \n"
         return s
 
 
@@ -159,11 +166,11 @@ def write_applications_to_file(team, group, applicant_data_list: list[ApplicantD
     for d in applicant_data_list:
         # write header line
         file.writelines(
-            f"\n\n\n## {group[0].capitalize()}{i} {d.general_info.name} for {team}\n\n")
+            f"\n\n\n## {group[0].capitalize()}{i} {d.a_general_info.name} for {team}\n\n")
 
-        file.writelines(repr(d.general_info))
+        file.writelines(repr(d.a_general_info))
         file.writelines("\n")
-        file.writelines(repr(d.applicant))
+        file.writelines(repr(d.a_specific_info))
 
         i += 1
     file.close()
@@ -178,10 +185,29 @@ def _create_md_file(team: str, group: str) -> TextIOWrapper:
     return file
 
 
+def create_dummy_applicants(n: int) -> Applicants:
+    if n < 2:
+        raise ValueError(
+            f'invalid input: amount of dummy applicants {n} is too low')
+    all_applicants, newcomer_applicants, returner_applicants = [], [], []
+    for _ in range(0, n):
+        new_applicant = ApplicantData(GeneralInfo(), NewcomerApplicant())
+        all_applicants.append(new_applicant)
+        newcomer_applicants.append(new_applicant)
+    for _ in range(0, n):
+        new_applicant = ApplicantData(GeneralInfo(), ReturnerApplicant())
+        all_applicants.append(new_applicant)
+        returner_applicants.append(new_applicant)
+
+    applicants_by_team = {TEAM: {
+        GROUP_NEWCOMERS: list(filter(lambda a: a.a_specific_info.interested_roles.__contains__(TEAM), newcomer_applicants)),
+        GROUP_RETURNERS: list(filter(lambda a: a.a_specific_info.interested_roles.__contains__(TEAM), returner_applicants))
+    } for TEAM in RELEASE_TEAM_TEAMS }
+
+    return Applicants(all_applicants, returner_applicants, newcomer_applicants, applicants_by_team)
+
 
 if __name__ == "__main__":
-    print(repr(GeneralInfo()))
-    print("\n\n\n")
-    print(repr(NewcomerApplicant()))
-    print("\n\n\n")
-    print(repr(ReturnerApplicant()))
+    applicants = create_dummy_applicants(10)
+    print(repr(applicants.applicants_by_team[TEAM_CISIGNAL][GROUP_NEWCOMERS]))
+        

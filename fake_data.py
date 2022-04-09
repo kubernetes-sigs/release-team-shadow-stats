@@ -32,10 +32,23 @@ class TimezoneProvider(BaseProvider):
         return secrets.choice(list(timezone_aliases.keys()))
 
 
+# Yes/No provider class
+class YesNoProvider(BaseProvider):
+    def yesno(self) -> str:
+        return secrets.choice(["Yes", "No"])
+
+
 # Pronouns provider class
 class PronounsProvider(BaseProvider):
     def pronoun(self) -> str:
         return secrets.choice(pronouns)
+
+
+# Company provider class
+class CompanyProvider(BaseProvider):
+    def company2(self) -> str:
+        return secrets.choice(["Walmart", "Amazon", "Apple", "CVS Health", "UnitedHealth Group", "Berkshire Hathaway", "McKesson", "AmerisourceBergen", "Alphabet", "Exxon Mobil",
+        "At&T", "Costco Wholesale", "Cigna", "Cardinal Health", "Microsoft", "Walgreens Boots Appliance", "Kroger", "Home Depot", "JPMorgan Chase", "Verizon Communications"])
 
 
 # Release Team provider class
@@ -51,6 +64,9 @@ fake.add_provider(lorem)
 fake.add_provider(TimezoneProvider)
 fake.add_provider(PronounsProvider)
 fake.add_provider(ReleaseTeamProvider)
+fake.add_provider(CompanyProvider)
+fake.add_provider(YesNoProvider)
+
 
 
 # The methods below are getting used in dataclasses to generate defaults for testing
@@ -69,11 +85,11 @@ def fake_get_pargraph() -> str:
 
 
 def fake_get_bool() -> str:
-    return fake.pybool()
+    return fake.yesno()
 
 
 def fake_get_company() -> str:
-    return fake.company()
+    return fake.company2()
 
 
 def fake_get_text() -> str:

@@ -20,11 +20,14 @@ from vars import *
 
 
 # Some general plotting
-def general_plotting(a_df: Applicants):
-    """General sig release wide charts"""
+def create_general_plotting(a: Applicants):
+    """General release team plotting (/charts)"""
+    # Timezones
+    applicant_timezones = [x.a_specific_info.timezone for x in a.returners] + \
+        [x.a_specific_info.timezone for x in a.newcomers]
     filter_entities(
         EntityPlottingConfig(
-            entities_list=a_df.all[SCHEMA_NEWCOMERS_TIMEZONE].tolist(),
+            entities_list=applicant_timezones,
             description="Timezone",
             aliases=timezone_aliases,
             threshold=1,
@@ -32,45 +35,46 @@ def general_plotting(a_df: Applicants):
         )
     )
     logging.info("see timezones: https://24timezones.com/timezone-map")
+    # Company / Affiliation
+    applicant_affiliations = [x.a_general_info.affiliation for x in a.all]
     filter_entities(
         EntityPlottingConfig(
-            entities_list=a_df.all[SCHEMA_AFFILIATION].tolist(),
+            entities_list=applicant_affiliations,
             description="Affiliation",
             keywords=company_keywords,
             aliases=company_aliases
         )
     )
-    applicants_by_team(len(a_df.all), a_df.applicants_by_team)
-    pronouns_chart(a_df.all[SCHEMA_PRONOUNS])
+    # Applicants by Release Team, team
+    applicants_by_team(len(a.all), a.applicants_by_team)
+    # Pronouns
+    pronouns_chart([x.a_general_info.pronoun for x in a.all])
+    # Newcomer that applied before but got rejected
     reapplying_newcomers(
-        a_df.newcomers[SCHEMA_NEWCOMERS_APPLIED_PREVIOUSLY])
-    newcomers_and_returners(a_df.returners, a_df.newcomers)
+        [x.a_specific_info.applied_previously for x in a.newcomers])
+    # Ration Newcomers:Returners - returning release team members (returners) and first time release team members (newcomer)
+    newcomers_and_returners(a.returners, a.newcomers)
 
 
-def team_plotting(a: Applicants):
-    """Team specific plotting"""
+def create_team_plotting(a: Applicants):
+    """Release Team specific plotting
+    the following charts are getting generated for each release team
+    """
     for team in a.applicants_by_team:
+        # Team applicants, newcomer:returner ratio
         newcomers_and_returners(
             a.applicants_by_team[team][GROUP_RETURNERS],
             a.applicants_by_team[team][GROUP_NEWCOMERS],
             team
         )
-        applied_for_multiple_teams(
-            [
-                a.applicants_by_team[team][GROUP_NEWCOMERS][SCHEMA_NEWCOMERS_INTERESTED_IN_ROLES],
-                a.applicants_by_team[team][GROUP_RETURNERS][SCHEMA_RETURNERS_INTERESTED_IN_ROLES]
-            ],
-            team,
-            a.applicants_by_team
-        )
-        team_applicants_by_pronouns = a.applicants_by_team[team][GROUP_NEWCOMERS][SCHEMA_PRONOUNS].tolist(
-        ) + a.applicants_by_team[team][GROUP_RETURNERS][SCHEMA_PRONOUNS].tolist()
+        team_applicants_by_pronouns = [x.a_general_info.pronoun for x in a.applicants_by_team[team][GROUP_NEWCOMERS]] + [
+            x.a_general_info.pronoun for x in a.applicants_by_team[team][GROUP_RETURNERS]]
         pronouns_chart(
             team_applicants_by_pronouns,
             team
         )
-        team_applicants_by_timezone = a.applicants_by_team[team][GROUP_NEWCOMERS][SCHEMA_NEWCOMERS_TIMEZONE].tolist(
-        ) + a.applicants_by_team[team][GROUP_RETURNERS][SCHEMA_RETURNERS_TIMEZONE].tolist()
+        team_applicants_by_timezone = [x.a_specific_info.timezone for x in a.applicants_by_team[team][GROUP_NEWCOMERS]] + [
+            x.a_specific_info.timezone for x in a.applicants_by_team[team][GROUP_RETURNERS]]
         filter_entities(
             EntityPlottingConfig(
                 entities_list=team_applicants_by_timezone,
@@ -84,121 +88,47 @@ def team_plotting(a: Applicants):
 
 
 # Create applicant markdown files
-
-def _returner_applications(team, a_df: Applicants):
-    """Write returner applications to a markdown file"""
-    team_returning_applicants = []
-    indexes = a_df.applicants_by_team[team][GROUP_RETURNERS].index
-    returners = a_df.applicants_by_team[team][GROUP_RETURNERS]
-    for i in indexes:
-        general_info = GeneralInfo(
-            returners[SCHEMA_EMAIL][i],
-            returners[SCHEMA_NAME][i],
-            returners[SCHEMA_PRONOUNS][i],
-            returners[SCHEMA_SLACK][i],
-            returners[SCHEMA_GITHUB][i],
-            returners[SCHEMA_AFFILIATION][i]
-        )
-        returner_info = ReturnerApplicant(
-            returners[SCHEMA_RETURNERS_PREVIOUS_ROLES][i],
-            returners[SCHEMA_RETURNERS_PREVIOUS_RELEASE_AND_ROLE][i],
-            returners[SCHEMA_RETURNERS_INTERESTED_IN_ROLES][i],
-            returners[SCHEMA_RETURNERS_TIMEZONE][i],
-            returners[SCHEMA_RETURNERS_CAN_VOLUNTEER_FOR_UP_COMING_CYCLES][i],
-            returners[SCHEMA_RETURNERS_GOALS][i],
-            returners[SCHEMA_RETURNERS_CONTRIBUTION_PLANS][i],
-            returners[SCHEMA_RETURNERS_INTERESTED_IN_STABLE_ROSTER][i]
-        )
-        team_returning_applicants.append(
-            ApplicantData(general_info, returner_info))
-    write_applications_to_file(
-        team, GROUP_RETURNERS, team_returning_applicants)
-
-
-def _newcomer_applications(team, a_df: Applicants):
-    """Write newcomer applications to a markdown file"""
-    team_newcomer_applicants = []
-    indexes = a_df.applicants_by_team[team][GROUP_NEWCOMERS].index
-    newcomer = a_df.applicants_by_team[team][GROUP_NEWCOMERS]
-    for i in indexes:
-        general_info = GeneralInfo(
-            newcomer[SCHEMA_EMAIL][i],
-            newcomer[SCHEMA_NAME][i],
-            newcomer[SCHEMA_PRONOUNS][i],
-            newcomer[SCHEMA_SLACK][i],
-            newcomer[SCHEMA_GITHUB][i],
-            newcomer[SCHEMA_AFFILIATION][i]
-        )
-        newcomer_info = NewcomerApplicant(
-            interested_roles=newcomer[SCHEMA_NEWCOMERS_INTERESTED_IN_ROLES][i],
-            read_role_handbook=newcomer[SCHEMA_NEWCOMERS_READ_HANDBOOK][i],
-            why_interested=newcomer[SCHEMA_NEWCOMERS_WHY_INTERESTED][i],
-            feedback_handbook=newcomer[SCHEMA_NEWCOMERS_HANDBOOK_QUESTIONS][i],
-            timeestimate_commit_to_releaseteam=newcomer[
-                SCHEMA_NEWCOMERS_TIMESTIMATE][i],
-            able_to_attend_release_team_meetings=newcomer[
-                SCHEMA_NEWCOMERS_ATTEND_RELEASE_TEAM_MEETINGS][i],
-            able_to_attend_burndown_meetings=newcomer[
-                SCHEMA_NEWCOMERS_ATTEND_BURNDOWN_MEETINGS][i],
-            scheduled_conflicts=newcomer[SCHEMA_NEWCOMERS_SCHEDULED_CONFLICTS][i],
-            volunteer_for_upcoming_cycles=newcomer[
-                SCHEMA_NEWCOMERS_VOLUNTEER_UPCOMING_RELEASE][i],
-            timezone=newcomer[SCHEMA_NEWCOMERS_TIMEZONE][i],
-            experience_contributing=newcomer[SCHEMA_NEWCOMERS_EXPERIENCE_CONTRIBUTING][i],
-            signed_cla=newcomer[SCHEMA_NEWCOMERS_SIGNED_CLA][i],
-            k8s_org_member=newcomer[SCHEMA_NEWCOMERS_K8S_ORG_MEMBER][i],
-            prior_release_teams=newcomer[SCHEMA_NEWCOMERS_PRIOR_RELEASE_TEAMS][i],
-            relevant_experience=newcomer[SCHEMA_NEWCOMERS_RELEVANT_EXPERIENCE][i],
-            goals=newcomer[SCHEMA_NEWCOMERS_GOALS][i],
-            contribution_plans=newcomer[SCHEMA_NEWCOMERS_CONTRIBUTION_PLANS][i],
-            comments=newcomer[SCHEMA_NEWCOMERS_COMMENTS][i],
-            applied_previously=newcomer[SCHEMA_NEWCOMERS_APPLIED_PREVIOUSLY][i]
-        )
-        team_newcomer_applicants.append(
-            ApplicantData(general_info, newcomer_info)
-        )
-    write_applications_to_file(team, GROUP_NEWCOMERS, team_newcomer_applicants)
-
-
-def generate_application_summaries(a_df: Applicants):
-    """generate applicantion summary markdown files"""
+def create_application_summaries(a_df: Applicants):
+    """Create markdown files with the applicantion information by team & splitted into returners and newcomers
+    - ci-signal-returners-applicants.md
+    - ci-signal-newcomer-applicants.md
+    - ...
+    """
     for team in a_df.applicants_by_team:
-        _returner_applications(team, a_df)
-        _newcomer_applications(team, a_df)
-
-
-def generate_test_files():
-    pass
+        write_applications_to_file(
+            team, GROUP_NEWCOMERS, a_df.applicants_by_team[team][GROUP_NEWCOMERS])
+        write_applications_to_file(
+            team, GROUP_RETURNERS, a_df.applicants_by_team[team][GROUP_RETURNERS])
 
 
 if __name__ == "__main__":
-    # define flags
-    test_run = flag.int(
-        "test-runs", 0, "Generate test files and don't read Excel file")
+    # Flags
+    test = flag.int(
+        "test", 0, "Generate test files and don't read Excel file")
     local_excel_file = flag.string(
         "file", "application-release-team-1.24.xlsx", "Applicant data source xlsx file")
     set_verbose_logging = flag.int(
         "verbose", 0, "Activate verbose logging [0/1]")
     flag.parse()
 
-    # set logging configuration
+    # Logging configuration
     switcher = {0: logging.WARNING, 1: logging.DEBUG}
     logging.basicConfig(level=switcher.get(
         set_verbose_logging.val(), logging.WARNING))
 
-    if test_run > 0:
-        # generate test files
-        pass
-    elif test_run == 0:
-        # try to open the specified file
+    data = None
+    if test.val() == 0:
         try:
-            applicantion_df = load_data(local_excel_f=local_excel_file.val())
+            data = load_data(local_excel_f=local_excel_file.val())
         except Exception as e:
             logging.error(e)
+    else:
+        # create dummy application data
+        data = create_dummy_applicants(50)
 
-        # create plots / charts
-        general_plotting(applicantion_df)
-        team_plotting(applicantion_df)
+    # create plots / charts
+    create_general_plotting(data)
+    create_team_plotting(data)
 
-        # generate applicantion summary markdown files
-        generate_application_summaries(applicantion_df)
+    # generate applicantion summary markdown files
+    create_application_summaries(data)

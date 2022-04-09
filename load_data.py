@@ -31,35 +31,16 @@ def load_data(local_excel_f) -> Applicants:
     newcomers = dataframe[dataframe[SCHEMA_PREVIOUSLY_SERVED].str.contains(
         "No")]
 
-    applicants_by_team = {
-        TEAM_BUGTRIAGE: {},
-        TEAM_CISIGNAL: {},
-        TEAM_COMMUNICATIONS: {},
-        TEAM_RELEASE_NOTES: {},
-        TEAM_DOCS: {},
-        TEAM_ENHANCEMENTS: {}
-    }
-
     returners_classes = _get_returner_info_from_df(returners)
     newcomers_classes = _get_newcomer_info_from_df(newcomers)
     all_applicants = returners_classes + newcomers_classes
 
-    for team in applicants_by_team:
-        team_applicants_returners = _get_returner_info_from_df(returners[
-            returners[
-                SCHEMA_RETURNERS_INTERESTED_IN_ROLES
-            ].str.contains(team)
-        ])
-        team_applicants_newcomers = _get_newcomer_info_from_df(newcomers[
-            newcomers[
-                SCHEMA_NEWCOMERS_INTERESTED_IN_ROLES
-            ].str.contains(team)
-        ])
-        applicants_by_team[team] = {
-            GROUP_RETURNERS: team_applicants_returners,
-            GROUP_NEWCOMERS: team_applicants_newcomers
-        }
-    
+    applicants_by_team = {TEAM: {
+        GROUP_NEWCOMERS: list(filter(lambda a: a.a_specific_info.interested_roles.__contains__(TEAM), newcomers_classes)),
+        GROUP_RETURNERS: list(filter(
+            lambda a: a.a_specific_info.interested_roles.__contains__(TEAM), returners_classes))
+    } for TEAM in RELEASE_TEAM_TEAMS}
+
     return Applicants(all_applicants, returners_classes, newcomers_classes, applicants_by_team)
 
 
@@ -74,11 +55,10 @@ def _get_general_info_from_df(df_series, i) -> GeneralInfo:
     )
 
 
-def _get_returner_info_from_df(df) -> list[ReturnerApplicant]:
+def _get_returner_info_from_df(returners) -> list[ApplicantData]:
     """Write returner applications to a markdown file"""
     team_returning_applicants = []
-    indexes = df.a_returners.index
-    returners = df.a_returners
+    indexes = returners.index
     for i in indexes:
         general_info = _get_general_info_from_df(returners, i)
         returner_info = ReturnerApplicant(
@@ -93,12 +73,12 @@ def _get_returner_info_from_df(df) -> list[ReturnerApplicant]:
         )
         team_returning_applicants.append(
             ApplicantData(general_info, returner_info))
+    return team_returning_applicants
 
 
-def _get_newcomer_info_from_df(df) -> list[NewcomerApplicant]:
+def _get_newcomer_info_from_df(newcomer) -> list[ApplicantData]:
     team_newcomer_applicants = []
-    indexes = df.a_newcomers
-    newcomer = df.a_newcomers
+    indexes = newcomer.index
     for i in indexes:
         general_info = _get_general_info_from_df(newcomer, i)
         newcomer_info = NewcomerApplicant(
@@ -129,3 +109,4 @@ def _get_newcomer_info_from_df(df) -> list[NewcomerApplicant]:
         team_newcomer_applicants.append(
             ApplicantData(general_info, newcomer_info)
         )
+    return team_newcomer_applicants

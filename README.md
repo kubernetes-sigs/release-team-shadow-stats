@@ -16,76 +16,14 @@ Currently, there is nothing really in place.
 
 * The release team has some guidelines, but no tools to assist in the selection of shadow applicants. This process is quite cumbersome as everything is based on Excel spreadsheets and it is difficult to review all applicants.
 ## Examples
-**Plots**:
-Plots are created for two different types of applicant pools. 
-* Pool 1: all applicants
-* Pool 2: applicants by sub-team (a pool for enhancements ). This means that the listed plots are created once for all applicants and then for each sub-team.
 
-* Applicants by release-team sub-team (enhacements, docs, release-notes, comm's, ci-signal, bug-triage)
-* Timezones
-* Affiliation / company
-* Pronouns
-* Reapplying newcomers
-* Newcomers / returners ratio
+Examples for the plots and the applicant summary markdown files can be found under the folder `examples/`
 
-The pie charts are generated using the python library [matplotlib](https://matplotlib.org/stable/index.html).
-
-**Applicant summary**:
-
-Template for returners:
-```md
-## R[ID] [name] for [release sub-team]
-**Pronoun**: [...], **Slack** [...], **GitHub** [...], **Affiliation**: [...]
-
-* **Timezone**: [...]
-* **Previous Roles**: [...]
-* **Previous Release**: [...]
-
-**Goals**:
-[...]
-
-**Contribution plans**:
-[...]
-
-* **Interest in stable rooster**: [Yes/No]
-* **Can volunteer for up coming cycles**: [Yes/No]
-```
-Template for newcomers:
-
-```md
-## N[ID] [name] for [release sub-team]
-**Pronoun**: [...], **Slack** [...], **GitHub** [...], **Affiliation**: [...]
-
-* **Timezone**: [...]
-* **Read handbook**: [Yes No]
-* **Scheduled conflicts**: [...]
-
-**Why interested**: [...]
-
-**Goals**: [...] 
-
-**Contribution plans**: [...]
-
-**Comments**: [...]
-
-**Relevant experience**: [...]
-
-**Handbook feedback**: [...]
-
-**Experience contributing**: [...]
-
-**Prior release teams**: [...]
-
-* **Timestimate to spare per week**: [...]
-* **Able to attend release team meetings**: [...]
-* **Able to attend burndown meetings**: [...]
-* **Volunteer for upcoming cycles**: [Yes/No]
-* **Applied previously**: [...]
-
-* **K8s org member**: [Yes/No]
-* **Signed CLA**: [Yes/No]
-
-```
+Release Team shadow applicants by team
+![example: applicants by team](./examples/plots/applicants-by-team.png)
+Pronouns Example
+![example: pronouns](./examples/plots/pronouns-.png)
+...more charts can be found under `examples/plots`
 
 ## How to work on this project
 
