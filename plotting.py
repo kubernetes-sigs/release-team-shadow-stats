@@ -122,37 +122,6 @@ def pronouns_chart(pronouns_data: list[str], team=""):
     plt.style.use(THEME_MARPLOTLIB)
     plt.savefig(get_plot_file(f"pronouns-{team.replace(' ', '').lower()}"))
 
-
-def applied_for_multiple_teams(applicant_applied_to_teams: list[list[str]], team="", release_teams=None):
-    """filter applicants which also applied to another team"""
-    if release_teams is None:
-        release_teams = {}
-    logging.info("%s applicants applied to other teams", team)
-    number_of_applicants_which_also_applied_to_another_team = 0
-    _, ax3 = plt.subplots()
-    applied_to_team_as_well = {}
-    for applicant in applicant_applied_to_teams:
-        for selected_teams in applicant:
-            interested_in_teams = selected_teams.split(", ")
-            if len(interested_in_teams) > 1:
-                number_of_applicants_which_also_applied_to_another_team += 1
-            for interested_in_team in interested_in_teams:
-                applied_to_team_as_well[interested_in_team.strip()] = applied_to_team_as_well.get(
-                    interested_in_team.strip(), 0) + 1 
-    if team != "" and team in applied_to_team_as_well.keys():
-        del applied_to_team_as_well[team]
-        total_team_applicants = len(release_teams[team][GROUP_RETURNERS]) + \
-            len(release_teams[team][GROUP_NEWCOMERS])
-        logging.info("%s of %s also applied to one or more of the other teams", \
-            number_of_applicants_which_also_applied_to_another_team, total_team_applicants)
-        ax3.pie(applied_to_team_as_well.values(), labels=applied_to_team_as_well.keys(
-        ), autopct=make_autopct(applied_to_team_as_well.values()))
-        ax3.axis('equal')
-        plt.style.use(THEME_MARPLOTLIB)
-        plt.savefig(get_plot_file(
-            f"applied-to-other-teams-{team.replace(' ', '').lower()}"))
-
-
 def newcomers_and_returners(returners_df, newcomers_df, team=""):
     """filter newcomers and returners by team"""
     if team != "":
