@@ -1,23 +1,18 @@
 # Release Team Shadow Applicant analysis
 
-This project is being developed in the scope of Kubernetes [sig-release](https://github.com/kubernetes/sig-release/blob/master/release-team/README.md). The project intent 
-is to initiate a discussion aimed at improving the Release Team Shadow program. This project could also be the subject of a donation to one of the Kubernetes repos/orgs.
+*Disclaimer: The project is work in progress*
 
-## Summary
 This project is designed to support at the release team shadow selection process. It should be used in the shadow selection phase and to communicate transparently with the community about the current status of the release team shadow program.    
 
-**Project Goals**:
-* Improve the release team shadow selection process
-* Provide some transparency about the current shadow program
+**Goals**:
+* Improve the release team shadow selection process by extracting data from a excel into multiple markdown files (see [examples/applicant](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/applicants))  
+* Provide some transparency about the current shadow program by creating non identifying charts that can be shared with the community (see [examples/plots](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/plots))
 
-## Current Situation
-Currently, there is nothing really in place. 
-* Since the applicant data is confidential. The information is not shared. No one outside of sig-release has any idea of the status of the shadow application program.
+The files in found under the folder [`example/`](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples) are generated with fake data!
 
-* The release team has some guidelines, but no tools to assist in the selection of shadow applicants. This process is quite cumbersome as everything is based on Excel spreadsheets and it is difficult to review all applicants.
-## Examples
+## Examples (see [examples/README.md](https://github.com/kubernetes-sigs/release-team-shadow-stats/blob/main/examples/README.md))
 
-Examples for the plots and the applicant summary markdown files can be found under the folder `examples/`
+Examples for the chats / plots and the applicant summary markdown files can be found under the folder `examples/`. 
 
 Release Team shadow applicants by team
 ![example: applicants by team](./examples/plots/applicants-by-team.png)
@@ -29,10 +24,19 @@ By running `python main.py --test=1` dummy applicant data is getting generated.
 
 ## How to work on this project
 
-Create local virtual environment `python3 -m venv tutorial-env` and activate the virtual environment with `source venv/bin/activate`.
-Install all dependencies with `pip install -r requirements.txt`. To update the requirements run `pip freeze > requirements.txt`. 
+### Setup your local working environment
+
+1. Create a local virtual python environment `python3 -m venv venv`
+2. Activate the local virtual python environment `source venv/bin/activate`.
+3. Install dependencies `pip install -r requirements.txt`. 
+
+
 To generate the plots and applicant summaries run `python main.py --file=your-file.xlsx`.
 Make sure to place a matching xlsx file to the root dir of the project.
+
+### Run the application
+
+To update the requirements run `pip freeze > requirements.txt`.
 
 ## Community, discussion, contribution, and support
 You can reach the maintainers of this project at:
