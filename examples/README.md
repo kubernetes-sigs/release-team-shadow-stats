@@ -9,9 +9,9 @@ The example files in the folder `applicants` & `plots` have been generated with 
 1. [(PRIVATE) Examples of the applicant data extraction (data is not shared with the community)](#examples-markdown-extracts)
 2. [(PUBLIC) Examples of the Plots (data is shared with the community)](#examples-plots--charts)
 
+The plots are getting shared in a report with the community at the beginning of a release cycle. The [report template can be found under the `reports` folder](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/reports/report-template.md).
 
 ## Examples: Markdown extracts
-
 
 All the files can be found under [examples/applicants](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/applicants)
 

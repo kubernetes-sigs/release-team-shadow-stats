@@ -49,7 +49,7 @@ _comparison to previous cycle_
 
 ### Affiliation
 ![Affiliation / Company](../plots/entities-affiliation.png)
-
+_comparison to previous cycle_
 </td><td>
 
 ### Reapplying Newcomers
