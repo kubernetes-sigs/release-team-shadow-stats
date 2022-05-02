@@ -56,7 +56,7 @@ if __name__ == "__main__":
         schema_charts = CHART_SCHEMA_DEFINITIONS[schema_version.val()]
         schema_summary = SUMMARY_CONFIGS[schema_version.val()]
     else:
-        print("Test mode enabled... generate random test data...")
+        print("Test mode enabled... use random generated test data...")
         df = get_dataframe_random()
         df_opt_in = df
         schema_charts = TESTING_SCHEMA_CHARTS

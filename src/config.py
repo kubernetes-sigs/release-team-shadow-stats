@@ -65,7 +65,7 @@ CHART_SCHEMA_DEFINITIONS = {
         BasicChart("Previously served on the Kubernetes Release Team",
                    ["Have you previously served on a Kubernetes Release Team?"],
                    plotting_count_entities_up, {}),
-        BasicChart("How often applied to the release team",
+        BasicChart("Times applied before",
                    ["How many times have you applied to join the Release Team?"],
                    plotting_count_entities_up, {}),
         BasicChart("Release Team Roles Previously Served in",

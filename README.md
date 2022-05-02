@@ -1,14 +1,12 @@
 # Release Team Shadow Applicant analysis
 
-*Disclaimer: The project is work in progress*
-
 This project is designed to support at the release team shadow selection process. It should be used in the shadow selection phase and to communicate transparently with the community about the current status of the release team shadow program.    
 
 **Goals**:
 * Improve the release team shadow selection process by extracting data from a excel into multiple markdown files (see [examples/applicant](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/applicants))  
 * Provide some transparency about the current shadow program by creating non identifying charts that can be shared with the community (see [examples/plots](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/plots))
 
-The files in found under the folder [`example/`](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples) are generated with fake data!
+The files in found under the folder [`example/`](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples) are generated with **fake data**!
 
 ## Examples (see [examples/README.md](https://github.com/kubernetes-sigs/release-team-shadow-stats/blob/main/examples/README.md))
 

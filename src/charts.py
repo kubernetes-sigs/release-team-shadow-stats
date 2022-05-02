@@ -42,7 +42,9 @@ def plotting_count_entities_up(series: polars.Series, name: str, config: any):
     ax.axis('equal')
     plt.style.use(THEME_MARPLOTLIB)
     plt.title(name)
-    plt.savefig(get_plot_file(name.lower().replace(" ", "-")))
+    filename = get_plot_file(name.lower().replace(" ", "-"))
+    plt.savefig(filename)
+    print(f"Plot saved {filename}")
 
 
 def break_label_lines(list_of_labels, max_words_per_line: int):
