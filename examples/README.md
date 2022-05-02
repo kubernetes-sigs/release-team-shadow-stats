@@ -163,6 +163,22 @@ Each team has the same types of plots.
 ##### Documentation Pronouns
 ![Documentation Returners / Newcomers](./plots/pronouns-documentation.png)
 
+
+#### Enhancement
+
+1. [Enhancement: Timezone](#enhancement-timezone)
+2. [Enhancement: Returners / Newcomers](#enhancement-returners-newcomers)
+3. [Enhancement: Pronouns](#enhancement-pronouns)
+
+##### Enhancement Timezone
+![Enhancement Timezone](./plots/entities-timezoneenhancements.png)
+
+##### Enhancement Returners, Newcomers
+![Enhancement Returners / Newcomers](./plots/returners-and-newcomersforenhancements.png)
+
+##### Enhancement Pronouns
+![Enhancement Returners / Newcomers](./plots/pronouns-enhancements.png)
+
 #### Release Notes
 
 1. [Release Notes: Timezone](#release-notes-timezone)
