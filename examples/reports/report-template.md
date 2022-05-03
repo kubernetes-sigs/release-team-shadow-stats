@@ -7,7 +7,7 @@
 -->
 ## Introduction
 
-Hello and welcome to the release-team-shadow-stats report for the release cycle 1.XX. This document should report the current status about the release team shadow application program which is open to apply for before a Kubernetes release cycle starts, you can read here more about the release team shadow application program.
+Hello and welcome to the release-team-shadow-stats report for the release cycle 1.XX. This document should report the current status about the release team shadow application program which is open to apply for before a Kubernetes release cycle starts, you can read [here](https://github.com/kubernetes/sig-release/tree/master/release-team) more about the release team shadow application program.
 
 The charts are structured in two sections, the general charts with all applicants in scope and more specific charts for each team. 
 
