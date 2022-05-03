@@ -24,21 +24,10 @@ If you have any questions or suggestions to improve this report feel free to rea
 ## General charts
 
 <table>
-<tr>
-<td> 
+<tr><td> 
 
 ### Applicants by team
 ![Applicants by team](../plots/applicants-by-team.png)
-_comparison to previous cycle_
-</td>
-</tr>
-</table>
-
-<table>
-<tr><td> 
-
-### Company affiliation
-![Affiliation / Company](../plots/entities-affiliation.png)
 _comparison to previous cycle_
 </td><td>
 
@@ -47,7 +36,7 @@ _comparison to previous cycle_
 _comparison to previous cycle_
 </td></tr><tr><td> 
 
-### Affiliation
+### Company Affiliation
 ![Affiliation / Company](../plots/entities-affiliation.png)
 _comparison to previous cycle_
 </td><td>
@@ -64,6 +53,16 @@ _comparison to previous cycle_
 
 ### Returners, Newcomers
 ![Returners / Newcomers](../plots/returners-and-newcomers.png)
+_comparison to previous cycle_
+</td></tr><tr><td> 
+
+### Newcomer re-applications
+![TBD: Newcomers re-applications]()
+_comparison to previous cycle_
+</td><td>
+
+### Previous Returner Roles
+![TBD: Previous Returner Roles]()
 _comparison to previous cycle_
 </td></tr>
 </table>
