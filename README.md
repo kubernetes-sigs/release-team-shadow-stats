@@ -30,13 +30,10 @@ By running `python main.py --test=1` dummy applicant data is getting generated.
 2. Activate the local virtual python environment `source venv/bin/activate`.
 3. Install dependencies `pip install -r requirements.txt`. 
 
-
 To generate the plots and applicant summaries run `python main.py --file=your-file.xlsx`.
 Make sure to place a matching xlsx file to the root dir of the project.
 
 ### Run the application
-
-To update the requirements run `pip freeze > requirements.txt`.
 
 ## Community, discussion, contribution, and support
 You can reach the maintainers of this project at:

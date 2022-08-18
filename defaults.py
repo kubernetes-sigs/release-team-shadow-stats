@@ -53,7 +53,6 @@ company_keywords = [
     "vmware",
     "microsoft",
     "red hat",
-    "institute",
     "cisco",
     "ibm",
     "apple",
@@ -70,13 +69,12 @@ company_aliases = {
     "independant": "independent"
 }
 
-
 timezone_aliases = {
     "gmt": "london gmt+0", "paris": "london gmt+0", "london": "london gmt+0",
     "middle europe": "central europe gmt+1", "cet": "central europe gmt+1",
     "+ 1": "central europe gmt+1", "central time": "central europe gmt+1",
     "central european time": "central europe gmt+1", "berlin":
-    "central europe gmt+1", "+1": "central europe gmt+1",
+        "central europe gmt+1", "+1": "central europe gmt+1",
     "ist": "india gmt+5", "+5": "india gmt+5", "+ 5": "india gmt+5",
     "india": "india gmt+5", "indian": "india gmt+5", "+ 6": "india gmt+5",
     "pst": "us pacific gmt-8", "pdt": "us pacific gmt-8",
@@ -101,7 +99,8 @@ RELEASE_VERSION = "1.24"
 # General applicant infos
 SCHEMA_EMAIL = "Email Address"
 SCHEMA_NAME = "Name"
-SCHEMA_PRONOUNS = "To help address everyone correctly, please share your pronouns if you're comfortable doing so. You can more about pronoun sharing here https://www.mypronouns.org/sharing"
+SCHEMA_PRONOUNS = "To help address everyone correctly, please share your pronouns if you're comfortable doing so. You" \
+                  " can more about pronoun sharing here https://www.mypronouns.org/sharing "
 SCHEMA_SLACK = "Slack Handle"
 SCHEMA_GITHUB = "Github Handle"
 SCHEMA_AFFILIATION = "Company Affiliation / Employer"
@@ -109,7 +108,8 @@ SCHEMA_PREVIOUSLY_SERVED = "Have you previously served on a Kubernetes Release T
 
 # Returners infos
 SCHEMA_RETURNERS_PREVIOUS_ROLES = "Which release team roles have you served in?"
-SCHEMA_RETURNERS_PREVIOUS_RELEASE_AND_ROLE = "Please tell us which release team(s) you were previously on and what role you held (i.e. Lead or Shadow)"
+SCHEMA_RETURNERS_PREVIOUS_RELEASE_AND_ROLE = "Please tell us which release team(s) you were previously on and what " \
+                                             "role you held (i.e. Lead or Shadow) "
 SCHEMA_RETURNERS_INTERESTED_IN_ROLES = f"What release team roles are you interested in for {RELEASE_VERSION}?"
 SCHEMA_RETURNERS_CAN_VOLUNTEER_FOR_UP_COMING_CYCLES = "Can you volunteer for 1.25 or 1.26?"
 SCHEMA_RETURNERS_TIMEZONE = "What time zone are you normally in?"
