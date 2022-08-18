@@ -15,20 +15,40 @@
 
 from dataclasses import dataclass
 from collections import Counter
+import matplotlib.pyplot as plt
 import polars
+from src.data_clean_up import clean
+from src.defaults import THEME_MARPLOTLIB, get_plot_file
 
-from data_clean_up import clean
+
+def _make_auto_percent(values):
+    """generic method to display percentage and amount on charts"""
+
+    def my_autopct(pct):
+        total = sum(values)
+        val = int(round(pct * total / 100.0))
+        return f"{pct:.2f}%  ({val:d})"
+
+    return my_autopct
 
 
 # Type of charts that can be created
-def plotting_count_entities_up(series: polars.Series, config: any):
-    column = clean(series, config)
-    print(Counter(column))
-    # create plot and safe it to the plot folder
+def plotting_count_entities_up(series: polars.Series, name: str, config: any):
+    column = clean(series.drop_nulls(), config)
+    column_counter = Counter(column)
+    _, ax = plt.subplots()
+    ax.pie(column_counter.values(), labels=column_counter.keys(),
+           autopct=_make_auto_percent(column_counter.values()))
+    ax.axis('equal')
+    plt.style.use(THEME_MARPLOTLIB)
+    plt.title(name)
+    plt.savefig(get_plot_file(name.lower().replace(" ", "-")))
 
 
 @dataclass(order=True)
 class BasicChart:
+    # Title of the diagram
+    plot_name: str
     # name of the columns to process the data from
     dataframe_columns: list[str]
     # this needs to be a function that creates a chart, see plotting_xxx methods above
@@ -39,6 +59,6 @@ class BasicChart:
     def create_plot(self, df: polars.DataFrame):
         s = polars.Series([]).cast(str)
         for e in self.dataframe_columns:
-            print(df.get_column(e))
             s.append(df.get_column(e))
-        self.plotter(s, self.data_clean_up_config)
+        self.plotter(s, self.plot_name, self.data_clean_up_config)
+

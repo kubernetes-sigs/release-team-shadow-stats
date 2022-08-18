@@ -11,29 +11,44 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from config import RELEASE_124, SCHEMAS
-from data_parser import read_file, clean_up_duplicate_column_names
+
+
+import os
+import flag
+from src.config import CHART_SCHEMA_DEFINITIONS
+from src.data_parser import read_file, clean_up_duplicate_column_names
+
+
+OPT_OUT_COLUMN_125 = "We would like to use your answers to produce anonymized reports about shadow applicants. Do you" \
+                     " consent to your answers being used in a non-identifying way?"
+
 
 if __name__ == "__main__":
-    # Get user input from flags
-    version = RELEASE_124
+    print("Process user input...")
+    source_data_file = flag.string(
+        "file", "shadow-application.csv", "Applicant data source CSV file")
+    schema_version = flag.string(
+        "schema", "1.25", "Schema that is used to create charts")
+    flag.parse()
 
-    # Check user input
-    # ...
+    print("Check input...")
+    if not os.path.isfile(source_data_file.val()):
+        print("ERROR: csv file does not exist")
+        exit(1)
+    if schema_version.val() not in CHART_SCHEMA_DEFINITIONS:
+        print(f"ERROR: schema does not exist, currently {CHART_SCHEMA_DEFINITIONS.keys()} are defined")
+        exit(1)
 
-    # Clean duplicate column names
-    source_data_file = "./test-125.csv"
-    cleaned_data_file = "./test-125-2.csv"
-    clean_up_duplicate_column_names(source_data_file, cleaned_data_file)
+    print("Clean up potential duplicate column names...")
+    cleaned_data_file = "cleaned-" + source_data_file.val()
+    clean_up_duplicate_column_names(source_data_file.val(), cleaned_data_file)
 
-    # Create dataframe from data file
-    df = read_file(cleaned_data_file)
+    print("Create dataframe from data file...")
+    df = read_file(cleaned_data_file, OPT_OUT_COLUMN_125)
 
-    # Create charts that are used for the public report
-    print("create plots...")
-    for chart in SCHEMAS[version]:
+    print("Create charts that are used for the public report...")
+    for chart in CHART_SCHEMA_DEFINITIONS[schema_version.val()]:
         chart.create_plot(df)
-    print("finished creating plots...")
 
-    # Create markdown applicant summary
+    print("Create markdown applicant summary...")
     # ...

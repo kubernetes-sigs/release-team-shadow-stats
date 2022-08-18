@@ -16,16 +16,16 @@ import polars as ps
 
 
 # This function is used to read csv files, decode the files and return a polars dataframe
-def read_file(file) -> ps.DataFrame:
-    print("create dataframe...")
+def read_file(file, opt_out_column, opt_in_key="Yes") -> ps.DataFrame:
     df = ps.read_csv(file)
-    print("dataframe preview ")
-    print(df)
+    if opt_out_column != "":
+        # Just go ahead with the data if the applicant has given consent to the data processing
+        return df.filter(ps.col(opt_out_column) == opt_in_key)
     return df
 
 
 # clean_up_duplicate_column_names used to set unique column names which are required for further processing
-def clean_up_duplicate_column_names(file, new_file):
+def clean_up_duplicate_column_names(file, new_file, duplicate_column_identifier=".1"):
     duplicated_column_count = 0
     with open(new_file, "w") as target_file:
         with open(file, "r") as source_file:
@@ -42,9 +42,9 @@ def clean_up_duplicate_column_names(file, new_file):
                             # it can be the case that there are three or more columns with the same name,
                             # in this case the next two lines would need to get updated
                             if current_column in columns:
-                                print("Duplicate Column name detected: ", current_column)
+                                print("- info, duplicate Column name detected: ", current_column)
                                 duplicated_column_count += 1
-                                current_column += ".1"
+                                current_column += duplicate_column_identifier
                             columns.append(current_column)
                             current_column = ""
                         else:
@@ -56,4 +56,4 @@ def clean_up_duplicate_column_names(file, new_file):
                 target_file.write(row)
             source_file.close()
         target_file.close()
-    print(f"cleaned up {duplicated_column_count} column names")
+    print(f"= {duplicated_column_count} column names cleaned up")
