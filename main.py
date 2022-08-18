@@ -17,7 +17,7 @@ import os
 import flag
 from src.config import CHART_SCHEMA_DEFINITIONS
 from src.data_parser import read_file, clean_up_duplicate_column_names
-
+from src.test_data import get_dataframe_random, TESTING_SCHEMA
 
 OPT_OUT_COLUMN_125 = "We would like to use your answers to produce anonymized reports about shadow applicants. Do you" \
                      " consent to your answers being used in a non-identifying way?"
@@ -29,25 +29,34 @@ if __name__ == "__main__":
         "file", "shadow-application.csv", "Applicant data source CSV file")
     schema_version = flag.string(
         "schema", "1.25", "Schema that is used to create charts")
+    test_mode = flag.int("test", 0, "Generate test files and don't read CSV file")
     flag.parse()
 
-    print("Check input...")
-    if not os.path.isfile(source_data_file.val()):
-        print("ERROR: csv file does not exist")
-        exit(1)
-    if schema_version.val() not in CHART_SCHEMA_DEFINITIONS:
-        print(f"ERROR: schema does not exist, currently {CHART_SCHEMA_DEFINITIONS.keys()} are defined")
-        exit(1)
+    df = None
+    schema = []
+    if test_mode != 1:
+        print("Check input...")
+        if not os.path.isfile(source_data_file.val()):
+            print("ERROR: csv file does not exist")
+            exit(1)
+        if schema_version.val() not in CHART_SCHEMA_DEFINITIONS:
+            print(f"ERROR: schema does not exist, currently {CHART_SCHEMA_DEFINITIONS.keys()} are defined")
+            exit(1)
 
-    print("Clean up potential duplicate column names...")
-    cleaned_data_file = "cleaned-" + source_data_file.val()
-    clean_up_duplicate_column_names(source_data_file.val(), cleaned_data_file)
+        print("Clean up potential duplicate column names...")
+        cleaned_data_file = "cleaned-" + source_data_file.val()
+        clean_up_duplicate_column_names(source_data_file.val(), cleaned_data_file)
 
-    print("Create dataframe from data file...")
-    df = read_file(cleaned_data_file, OPT_OUT_COLUMN_125)
+        print("Create dataframe from data file...")
+        df = read_file(cleaned_data_file, OPT_OUT_COLUMN_125)
+        schema = CHART_SCHEMA_DEFINITIONS[schema_version.val()]
+    else:
+        print("Test mode enabled... generate random test data...")
+        df = get_dataframe_random()
+        schema = TESTING_SCHEMA
 
     print("Create charts that are used for the public report...")
-    for chart in CHART_SCHEMA_DEFINITIONS[schema_version.val()]:
+    for chart in schema:
         chart.create_plot(df)
 
     print("Create markdown applicant summary...")

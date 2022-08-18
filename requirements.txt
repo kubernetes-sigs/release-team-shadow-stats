@@ -2,3 +2,5 @@ Flag==0.1.1
 numpy==1.22.4
 polars==0.13.46
 pyarrow==8.0.0
+matplotlib~=3.5.3
+Faker~=14.1.0

@@ -57,123 +57,26 @@ As mentioned before these files if generated with real applicant data is not sha
 
 ## Examples: Plots / Charts
 
-1. Plots for all applicants
-2. Plots for applicants by team 
+#### Interested in teams
+![teams](./plots/test-interested-in-teams.png)
 
-### Plots: All applicants
+#### Company / Affiliation
+![company](./plots/test-company.png)
 
-1. [Applicants by team](#applicants-by-team)
-2. [Company affiliation](#company-affiliation)
-3. [Timezone](#timezone)
-4. [Pronouns](#pronouns)
-5. [Reapplying Newcomers](#reapplying-newcomers)
-6. [Returners / Newcomers](#returners-newcomers)
-
-#### Applicants by team
-![Applicants by team](./plots/applicants-by-team.png)
-
-#### Company affiliation
-![Affiliation / Company](./plots/entities-affiliation.png)
+#### How often applied to the release team
+![application-count](./plots/test-how-often-applied-to-the-release-team.png)
 
 #### Timezone
-![Applicants by team](./plots/applicants-by-team.png)
+![Timezone](./plots/test-timezone.png)
 
-#### Pronouns
-![Pronouns](./plots/pronouns-.png)
+#### Previously served in the release team
+![Previously served](./plots/test-previously-served-on-the-kubernetes-release-team.png)
 
-#### Reapplying Newcomers
-![Reapplying newcomers](./plots/reapplying-newcomers-.png)
+#### Previous roles as a returner to the release team
+![previous roles](./plots/test-previous-roles.png)
 
-#### Returners, Newcomers
-![Returners / Newcomers](./plots/returners-and-newcomers.png)
+#### Attend Burndown meetings
+![burndown meetings](./plots/test-able-to-attend-burndown-meetings.png)
 
-
-### Plots: By team
-
-Plots are getting generated for each team in the release team that you can apply via the release team shadow application form.  
-
-1. [Bug Triage](#bug-triage)
-2. [CI Signal](#ci-signal)
-3. [Communications](#communications)
-4. [Documentation](#documentation)
-5. [Release Notes](#release-notes)
-
-Each team has the same types of plots.
-- Timezone
-- Returners / Newcomers
-- Pronouns
-
-#### Bug Triage
-
-1. [Bug Triage: Timezone](#bug-triage-timezone)
-2. [Bug Triage: Returners / Newcomers](#bug-triage-returners-newcomers)
-3. [Bug Triage: Pronouns](#bug-triage-pronouns)
-
-##### Bug Triage Timezone
-![Bug Triage Timezone](./plots/entities-timezonebugtriage.png)
-
-##### Bug Triage Returners, Newcomers
-![Bug Triage Returners / Newcomers](./plots/returners-and-newcomersforbugtriage.png)
-
-##### Bug Triage Pronouns
-![Bug Triage Returners / Newcomers](./plots/pronouns-bugtriage.png)
-
-#### CI Signal
-
-1. [CI Signal: Timezone](#ci-signal-timezone)
-2. [CI Signal: Returners / Newcomers](#ci-signal-returners-newcomers)
-3. [CI Signal: Pronouns](#ci-signal-pronouns)
-
-##### CI Signal Timezone
-![CI Signal Timezone](./plots/entities-timezonecisignal.png)
-
-##### CI Signal Returners, Newcomers
-![CI Signal Returners / Newcomers](./plots/returners-and-newcomersforcisignal.png)
-
-##### CI Signal Pronouns
-![CI Signal Returners / Newcomers](./plots/pronouns-cisignal.png)
-
-#### Communications
-
-1. [Communications: Timezone](#communications-timezone)
-2. [Communications: Returners / Newcomers](#communications-returners-newcomers)
-3. [Communications: Pronouns](#communications-pronouns)
-
-##### Communications Timezone
-![Communications Timezone](./plots/entities-timezonecommunications.png)
-
-##### Communications Returners, Newcomers
-![Communications Returners / Newcomers](./plots/returners-and-newcomersforcommunications.png)
-
-##### Communications Pronouns
-![Communications Returners / Newcomers](./plots/pronouns-communications.png)
-
-#### Documentation
-
-1. [Documentation: Timezone](#documentation-timezone)
-2. [Documentation: Returners / Newcomers](#documentation-returners-newcomers)
-3. [Documentation: Pronouns](#documentation-pronouns)
-
-##### Documentation Timezone
-![Documentation Timezone](./plots/entities-timezonedocumentation.png)
-
-##### Documentation Returners, Newcomers
-![Documentation Returners / Newcomers](./plots/returners-and-newcomersfordocumentation.png)
-
-##### Documentation Pronouns
-![Documentation Returners / Newcomers](./plots/pronouns-documentation.png)
-
-#### Release Notes
-
-1. [Release Notes: Timezone](#release-notes-timezone)
-2. [Release Notes: Returners / Newcomers](#release-notes-returners-newcomers)
-3. [Release Notes: Pronouns](#release-notes-pronouns)
-
-##### Release Notes Timezone
-![Release Notes Timezone](./plots/entities-timezonereleasenotes.png)
-
-##### Release Notes Returners, Newcomers
-![Release Notes Returners / Newcomers](./plots/returners-and-newcomersforreleasenotes.png)
-
-##### Release Notes Pronouns
-![Release Notes Returners / Newcomers](./plots/pronouns-releasenotes.png)
+#### Attend Release Team meetings
+![release team meetings](./plots/test-able-to-attend-release-team-meetings.png)
