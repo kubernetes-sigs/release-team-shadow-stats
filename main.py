@@ -30,7 +30,7 @@ if __name__ == "__main__":
         "file", "shadow-application.csv", "Applicant data source CSV file")
     schema_version = flag.string(
         "schema", "1.25", "Schema that is used to create charts")
-    test_mode = flag.int("test", 1, "Generate test files and don't read CSV file")
+    test_mode = flag.int("test", 0, "Generate test files and don't read CSV file")
     flag.parse()
 
     df, df_opt_in = None, None
