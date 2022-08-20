@@ -24,6 +24,7 @@ import secrets
 from src.charts import BasicChart, plotting_count_entities_up
 from src.data_clean_up import CLEAN_KEYWORDS, CLEAN_SPLIT_INTO_KEYWORDS, CLEAN_THRESHOLD
 from src.defaults import timezone_aliases, RELEASE_TEAM_TEAMS, company_keywords
+from src.summary import SummaryConfig
 
 
 # Timezone provider class
@@ -60,7 +61,7 @@ fake.add_provider(CompanyProvider)
 fake.add_provider(YesNoProvider)
 
 
-TESTING_SCHEMA = [
+TESTING_SCHEMA_CHARTS = [
         BasicChart("Test Company", ["Company"],
                    plotting_count_entities_up,
                    {CLEAN_KEYWORDS: company_keywords, CLEAN_THRESHOLD: 2}),
@@ -83,6 +84,22 @@ TESTING_SCHEMA = [
                    ["Attend Release Burndown Meetings"],
                    plotting_count_entities_up, {CLEAN_THRESHOLD: 2})
     ]
+
+
+TESTING_SCHEMA_SUMMARY = SummaryConfig(
+        # returner_column_name
+        "Previously served",
+        # team_column_name
+        ["Interested in roles",
+         "Interested in roles.1"],
+        # deactivated_columns
+        [],
+        # column_rename
+        {"Goals.1": "Goals"},
+        # teams
+        RELEASE_TEAM_TEAMS,
+        # file_prefix
+        "./applicants/test-")
 
 
 def get_dataframe_random(records: int = 100) -> polars.DataFrame:

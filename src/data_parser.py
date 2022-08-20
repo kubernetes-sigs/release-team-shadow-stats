@@ -16,12 +16,15 @@ import polars as ps
 
 
 # This function is used to read csv files, decode the files and return a polars dataframe
-def read_file(file, opt_out_column, opt_in_key="Yes") -> ps.DataFrame:
+# return 1: not filtered dataframe, 2: filtered by opt-out
+# INFO: 'not filtered dataframe' is used to generate summaries (instead of csv, markdown format) of the applicants
+#   that does not get shared publicly
+def read_file(file, opt_out_column, opt_in_key="Yes") -> (ps.DataFrame, ps.DataFrame):
     df = ps.read_csv(file)
     if opt_out_column != "":
         # Just go ahead with the data if the applicant has given consent to the data processing
-        return df.filter(ps.col(opt_out_column) == opt_in_key)
-    return df
+        return df, df.filter(ps.col(opt_out_column) == opt_in_key)
+    return df, df
 
 
 # clean_up_duplicate_column_names used to set unique column names which are required for further processing

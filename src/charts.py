@@ -61,4 +61,3 @@ class BasicChart:
         for e in self.dataframe_columns:
             s.append(df.get_column(e))
         self.plotter(s, self.plot_name, self.data_clean_up_config)
-
