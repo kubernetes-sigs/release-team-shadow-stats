@@ -14,10 +14,14 @@ The files in found under the folder [`example/`](https://github.com/kubernetes-s
 
 Examples for the chats / plots and the applicant summary markdown files can be found under the folder `examples/`. 
 
-Release Team shadow applicants by team
-![example: applicants by team](./examples/plots/applicants-by-team.png)
-Pronouns Example
-![example: pronouns](./examples/plots/pronouns-.png)
+**1. Release Team shadow applicants by team**
+
+![example: applicants by team](./examples/plots/test-interested-in-teams.png)
+
+**2. Able to attend Release Team Meetings Example**
+
+![example: pronouns](./examples/plots/test-able-to-attend-release-team-meetings.png)
+
 ...more charts can be found under `examples/plots`
 
 By running `python main.py --test=1` dummy applicant data is getting generated.
@@ -30,18 +34,19 @@ By running `python main.py --test=1` dummy applicant data is getting generated.
 2. Activate the local virtual python environment `source venv/bin/activate`.
 3. Install dependencies `pip install -r requirements.txt`. 
 
+Make sure to place a matching csv file to the root dir of the project.
 
-To generate the plots and applicant summaries run `python main.py --file=your-file.xlsx`.
-Make sure to place a matching xlsx file to the root dir of the project.
+* Prod execution example: `python main.py --file=125-release-team-shadow-applicants.csv --schema=1.25`
+* Example for testing purposes: `python main.py --test=1`
+
+After the execution you should see files added to the `applicants` and `plots` folder.
 
 ### Run the application
-
-To update the requirements run `pip freeze > requirements.txt`.
 
 ## Community, discussion, contribution, and support
 You can reach the maintainers of this project at:
 
-* [Kubernetes Slack](https://slack.k8s.io/) at `#sig-release` and `#release-ci-signal`
+* [Kubernetes Slack](https://slack.k8s.io/) at `#sig-release`
 
 ## Sponsoring SIG's
 * [`sig-release`](https://github.com/kubernetes/sig-release)
