@@ -37,13 +37,28 @@ def plotting_count_entities_up(series: polars.Series, name: str, config: any):
     column = clean(series.drop_nulls(), config)
     column_counter = Counter(column)
     _, ax = plt.subplots()
-    ax.pie(column_counter.values(), labels=column_counter.keys(),
+    ax.pie(column_counter.values(), labels=break_label_lines(column_counter.keys(), 4),
            autopct=_make_auto_percent(column_counter.values()))
     ax.axis('equal')
     plt.style.use(THEME_MARPLOTLIB)
     plt.title(name)
     plt.savefig(get_plot_file(name.lower().replace(" ", "-")))
 
+
+def break_label_lines(list_of_labels, max_words_per_line: int):
+    updated_list = []
+    for label in list_of_labels:
+        i = 0
+        w = ""
+        splitted_label_text = label.split()
+        for e in splitted_label_text:
+            i += 1
+            if i > max_words_per_line:
+                w += f"\n"
+                i = 1
+            w += f"{e} "
+        updated_list.append(w.strip())
+    return updated_list
 
 @dataclass(order=True)
 class BasicChart:
