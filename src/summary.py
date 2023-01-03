@@ -36,7 +36,9 @@ def write_file(df: polars.DataFrame, config: SummaryConfig):
     returners = df.filter(polars.col(config.returner_column_name) == "Yes")
     newcomers = df.filter(polars.col(config.returner_column_name) == "No")
     for group_name, e in {"Returners": returners, "Newcomers": newcomers}.items():
+        print(f"Writing group {group_name}")
         for team in config.teams:
+            print(f"Writing team {team}")
             f = open(f"{config.file_prefix}{group_name.lower()}-{team.lower().replace(' ', '-')}.md", "w+")
             f.write(f"# {group_name} {team}")
             i = 1

@@ -63,8 +63,9 @@ if __name__ == "__main__":
         schema_summary = TESTING_SCHEMA_SUMMARY
 
     print("Create charts that are used for the public report...")
-    for chart in schema_charts:
-        chart.create_plot(df_opt_in)
+    #for chart in schema_charts:
+    #    chart.create_plot(df_opt_in)
 
     print("Create markdown applicant summary...")
     write_file(df, schema_summary)
+    print("Done!")

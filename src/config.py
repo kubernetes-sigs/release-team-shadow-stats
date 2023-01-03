@@ -24,6 +24,7 @@ from src.summary import SummaryConfig
 
 K8s_125 = "1.25"
 K8s_126 = "1.26"
+K8s_127 = "1.27"
 
 CHART_SCHEMA_DEFINITIONS = {
     K8s_125: [
@@ -77,7 +78,8 @@ CHART_SCHEMA_DEFINITIONS = {
         BasicChart("Able to attend Burndown meetings",
                    ["Will you be able to attend Burndown meetings?"],
                    plotting_count_entities_up, {CLEAN_THRESHOLD: 2})
-    ]
+    ],
+    K8s_127: [],
 }
 
 # Info SummaryConfig:
@@ -155,5 +157,36 @@ SUMMARY_CONFIGS = {
         # teams
         RELEASE_TEAM_TEAMS,
         # file_prefix
-        "./applicants/")
+        "./applicants/"),
+    K8s_127: SummaryConfig(
+        # returner_column_name
+        "Have you previously served on a Kubernetes Release Team?",
+        # team_column_name
+        [
+            "Which Release Team roles are you interested in?",
+            "Which Release Team roles are you interested in?.1",
+        ],
+        # deactivated_columns
+        ["Timestamp", "We would like to use your answers to produce anonymized reports about "
+                      "shadow applicants. Do you consent to your answers being used in a "
+                      "non-identifying way?"],
+        # column_rename
+        {"Goals.1": "Goals",
+         "How many times have you applied to join the Release Team?:": "Times applied before",
+         "Have you read the role handbook associated with the role(s)?": "Read Handbook",
+         "Have you previously served on a Kubernetes Release Team?": "Previously served on the RT",
+         "How much time do you estimate you can commit to the Release Team a week? ": "Estimated Weekly Time commitment",
+         "Why are you interested in that role(s)?": "Why interested?",
+         "Will you be able to attend Release Team meetings? ": "Able to attend RT Meetings",
+         "Will you be able to attend Burndown meetings?": "Able to attend Burndown Meetings",
+         "How many times have you applied to join the Release Team?": "Times applied to join the RT",
+         "Can you volunteer for the subsequent release teams?": "Future Teams",
+         "Can you volunteer for the subsequent release teams?.1": "Future Teams",
+         "Which Release Team roles are you interested in?": "Interested in Teams",
+         "Which Release Team roles are you interested in?.1": "Interested in Teams",
+         },
+        # teams
+        RELEASE_TEAM_TEAMS,
+        # file_prefix
+        "./applicants/"),
 }
