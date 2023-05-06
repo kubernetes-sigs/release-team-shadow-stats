@@ -44,7 +44,7 @@ def write_file(df: polars.DataFrame, config: SummaryConfig):
                 for _, row in e.filter(polars.col(team_column).str.contains(team)).to_pandas().iterrows():
                     f.write(f"\n\n## {group_name[0]}{i}")
                     for colum in e.columns:
-                        if colum not in config.deactivated_columns and row[colum] is not None:
+                        if colum not in config.deactivated_columns and row[colum] is not None and row[colum] is not "":
                             if colum in config.column_rename:
                                 f.write(f"\n- **{config.column_rename[colum].strip()}**: {row[colum]}")
                             else:
