@@ -132,6 +132,7 @@ func formatEntry(filename string, rows []map[string]interface{}, configFields ya
 				firstTitle = false
 			}
 		}
+		mdEntries.WriteString("\n\n")
 
 		// Process Details fields
 		for _, detailField := range configFields.Fields.Details {
@@ -139,12 +140,11 @@ func formatEntry(filename string, rows []map[string]interface{}, configFields ya
 				mdEntries.WriteString(fmt.Sprintf("* **%s**: %s\n", detailField, value))
 			}
 		}
-		mdEntries.WriteString("\n\n")
 
 		// Process Text fields
 		for _, textField := range configFields.Fields.Text {
 			if value, ok := row[textField]; ok && value != "" {
-				mdEntries.WriteString(fmt.Sprintf("### %s\n\n%s\n", textField, value))
+				mdEntries.WriteString(fmt.Sprintf("\n### %s\n\n%s\n", textField, value))
 			}
 		}
 		mdEntries.WriteString("\n---\n")

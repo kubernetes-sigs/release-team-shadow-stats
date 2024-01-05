@@ -29,20 +29,17 @@ type SplitFilesBy struct {
 }
 
 func ReadYAMLFile(filepath string) (*F, error) {
-	// Open the YAML file
 	file, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	// Read the file contents
 	bytes, err := io.ReadAll(file)
 	if err != nil {
 		return nil, err
 	}
 
-	// Unmarshal the YAML
 	var config F
 	err = yaml.Unmarshal(bytes, &config)
 	if err != nil {
