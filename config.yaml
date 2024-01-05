@@ -1,0 +1,53 @@
+Fields:
+  Title:
+    - "Name"
+  Details:
+    - "Username"
+    - "Pronouns"
+    - "GitHub Username"
+    - "Kubernetes Slack Username"
+    - "Company Affiliation / Employer"
+    - "Time Zone"
+    - "Region"
+    - "How many times have you applied to join the Release Team?"
+    - "Have you previously served on a Kubernetes Release Team?"
+    - "We would like to use your answers to produce anonymized reports about shadow applicants. Do you consent to your answers being used in a non-identifying way?"
+    - "Which Release Team roles have you served in?"
+    - "Please tell us which Release Team(s) you were previously on and what role you held (e.g. Lead or Shadow)"
+    - "Which Release Team roles are you interested in?"
+    - "Can you volunteer for the subsequent release teams?"
+    - "Which Release Team roles are you interested in?.1"
+    - "Have you read the role handbook associated with the role(s)?"
+    - "How much time do you estimate you can commit to the Release Team a week? "
+    - "Will you be able to attend Release Team meetings? "
+    - "Can you volunteer for the subsequent release teams?.1"
+    - "Have you signed the CLA?"
+    - "Are you a Kubernetes Org Member?"
+  Text:
+    - "Goals"
+    - "Goals.1"
+    - "Why are you interested in that role(s)?"
+    - "Do you have other feedback or questions about the handbook?"
+    - "Do you have schedule conflicts?"
+    - "What is your experience contributing?"
+    - "Relevant Experience"
+SplitFilesBy:
+  - Identifiers:
+      - "Have you previously served on a Kubernetes Release Team?"
+    Alias:
+      "Yes": "Returner"
+      "No": "Newcomer"
+    PossibleOptions:
+      - "Yes"
+      - "No"
+  - Identifiers:
+      - "Which Release Team roles are you interested in?"
+      - "Which Release Team roles are you interested in?.1"
+    Alias: {}
+    PossibleOptions:
+      - "CI Signal"
+      - "Enhancements"
+      - "Documentation"
+      - "Release Notes"
+      - "Communications"
+      - "Bug Triage"

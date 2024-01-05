@@ -1,17 +1,12 @@
 # Examples generated with Fake Data
 
-The example files in the folder `applicants` & `plots` have been generated with fake data
+The example files in the folder `applicants` have been generated with fake data
 
 **Terminology**
 * Returners: Applicants that have been part of the release team before and apply again.
 * Newcomers: Applicants that have not been part of the release team yet and may have applied before. 
 
-1. [(PRIVATE) Examples of the applicant data extraction (data is not shared with the community)](#examples-markdown-extracts)
-2. [(PUBLIC) Examples of the Plots (data is shared with the community)](#examples-plots--charts)
-
-
 ## Examples: Markdown extracts
-
 
 All the files can be found under [examples/applicants](https://github.com/kubernetes-sigs/release-team-shadow-stats/tree/main/examples/applicants)
 
@@ -54,29 +49,3 @@ As mentioned before these files if generated with real applicant data is not sha
 * **Comments**: High case other they material go actually. 
 * **Applied previously**: No 
 ```
-
-## Examples: Plots / Charts
-
-#### Interested in teams
-![teams](./plots/test-interested-in-teams.png)
-
-#### Company / Affiliation
-![company](./plots/test-company.png)
-
-#### How often applied to the release team
-![application-count](./plots/test-how-often-applied-to-the-release-team.png)
-
-#### Timezone
-![Timezone](./plots/test-timezone.png)
-
-#### Previously served in the release team
-![Previously served](./plots/test-previously-served-on-the-kubernetes-release-team.png)
-
-#### Previous roles as a returner to the release team
-![previous roles](./plots/test-previous-roles.png)
-
-#### Attend Burndown meetings
-![burndown meetings](./plots/test-able-to-attend-burndown-meetings.png)
-
-#### Attend Release Team meetings
-![release team meetings](./plots/test-able-to-attend-release-team-meetings.png)

@@ -4,6 +4,7 @@ plots/*.png
 applicants/*.md
 .vscode
 .idea
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
