@@ -2,6 +2,7 @@ package mdfilepermutations
 
 import (
 	"kubernetes-sigs/release-team-shadow-stats/pkg/yamlparser"
+	"os"
 	"strings"
 )
 
@@ -21,6 +22,7 @@ type (
 type S struct {
 	MdFilename MdFilename
 	Values     []SValue
+	File       *os.File
 }
 
 type SValue struct {

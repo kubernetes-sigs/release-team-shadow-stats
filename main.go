@@ -13,7 +13,7 @@ import (
 func main() {
 	csvFilePath := pflag.String("csv", "data.csv", "path to the CSV file")
 	yamlFilePath := pflag.String("yaml", "config.yaml", "path to the YAML file")
-	outputFolder := pflag.String("output", "data/", "folder where markdown files will be written")
+	outputFolder := pflag.String("output", "data", "folder where markdown files will be written")
 	pflag.Parse()
 
 	config, err := yamlparser.ReadYAMLFile(*yamlFilePath)
@@ -30,7 +30,7 @@ func main() {
 	}
 	fmt.Printf("CSV Rows: %d", df.NRows())
 
-	if err = mdwriter.CreateMarkdownFiles(mdwriter.MdFileConfig{
+	if err = mdwriter.WriteMarkdownFiles(mdwriter.MdFileConfig{
 		Folder:      *outputFolder,
 		Df:          df,
 		MdFileInfos: permutations,
