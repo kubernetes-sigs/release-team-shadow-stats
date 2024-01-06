@@ -60,3 +60,8 @@ coverage.xml
 cover/
 
 .DS_Store
+
+bin
+
+*.out
+*.html

@@ -1,3 +1,19 @@
+/*
+Copyright 2024 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package mdwriter
 
 import (
@@ -24,7 +40,7 @@ type MdFileDetails struct {
 	Rows []map[string]interface{}
 }
 
-func WriteMarkdownFiles(mdfileconfig MdFileConfig) error {
+func WriteMarkdownFiles(mdfileconfig *MdFileConfig) error {
 	// open files buffers for each file
 	err := openFileBuffers(mdfileconfig)
 	if err != nil {
@@ -87,11 +103,7 @@ func WriteMarkdownFiles(mdfileconfig MdFileConfig) error {
 
 		// write the row to the files
 		for _, file := range writeToFiles {
-			formattedEntry, err := formatEntry(vals, mdfileconfig.Config)
-			if err != nil {
-				return err
-			}
-			_, err = file.WriteString(fmt.Sprintf("%s\n", formattedEntry.String()))
+			_, err = fmt.Fprintf(file, "%s\n", formatEntry(vals, &mdfileconfig.Config).String())
 			if err != nil {
 				return err
 			}
@@ -103,7 +115,7 @@ func WriteMarkdownFiles(mdfileconfig MdFileConfig) error {
 	return nil
 }
 
-func openFileBuffers(mdfileconfig MdFileConfig) error {
+func openFileBuffers(mdfileconfig *MdFileConfig) error {
 	err := os.MkdirAll(mdfileconfig.Folder, os.ModePerm)
 	if err != nil {
 		return fmt.Errorf("failed to create directory %s: %w", mdfileconfig.Folder, err)
@@ -116,7 +128,7 @@ func openFileBuffers(mdfileconfig MdFileConfig) error {
 			return fmt.Errorf("failed to open file %s: %w", filename, err)
 		}
 
-		_, err = f.WriteString(fmt.Sprintf("# %s\n\n", info.MdFilename))
+		_, err = fmt.Fprintf(f, "# %s\n\n", info.MdFilename)
 		if err != nil {
 			return fmt.Errorf("failed to write the file header to file %s: %w", filename, err)
 		}
@@ -125,7 +137,7 @@ func openFileBuffers(mdfileconfig MdFileConfig) error {
 	return nil
 }
 
-func formatEntry(row map[string]interface{}, configFields yamlparser.F) (*strings.Builder, error) {
+func formatEntry(row map[string]interface{}, configFields *yamlparser.F) *strings.Builder {
 	var mdEntries strings.Builder
 
 	// Process Title fields
@@ -158,5 +170,5 @@ func formatEntry(row map[string]interface{}, configFields yamlparser.F) (*string
 	}
 	mdEntries.WriteString("\n---\n")
 
-	return &mdEntries, nil
+	return &mdEntries
 }
