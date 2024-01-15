@@ -1,0 +1,41 @@
+Fields:
+  Title:
+    - "Name"
+  Details:
+    - "Email Address"
+    - "Pronouns"
+    - "GitHub Handle"
+    - "Slack Handle"
+    - "Kubernetes Slack Username"
+    - "Company Affiliation / Employer"
+    - "Which release roles are you interested in?"
+    - "Have you read the role handbook associated with that role?"
+    - "How much time do you estimate you can commit to the Release Team a week?"
+    - "Will you be able to attend Release Team meetings?"
+    - "Will you be able to attend Burndown meetings?"
+    - "Do you have schedule conflicts?"
+    - "Can you volunteer for 1.31 or 1.32?"
+    - "What time zone are you normally in?"
+    - "Have you signed the CLA?"
+    - "Are you a Kubernetes Org Member?"
+    - "Prior Release Teams"
+    - "Do you have schedule conflicts?"
+  Text:
+    - "Why are you interested in that role(s)?"
+    - "Do you have other feedback or questions about the handbook?"
+    - "What is your experience contributing?"
+    - "Relevant Experience"
+    - "What is your experience contributing?"
+    - "Goals"
+    - "Contribution Plans"
+    - "Comments"
+SplitFilesBy:
+  - Identifiers:
+      - "Which release roles are you interested in?"
+    Alias: {}
+    PossibleOptions:
+      - "Enhancements"
+      - "Documentation"
+      - "Release Notes"
+      - "Communications"
+      - "Release Signal"
